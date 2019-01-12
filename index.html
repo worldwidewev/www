@@ -34,16 +34,19 @@
 	<script src="js/Reflector.js"></script>
 	<script src="js/DragControls.js"></script>
 	<script src="js/TrackballControls.js"></script>
-
+	<script src="js/Projector.js"></script>
 
 	<script src="js/stats.min.js"></script>
 
 	<script>
-		var container, stats;
-		var renderer, scene, camera, stats, controls;
+		var container, stats, clock, mixer;
+		var renderer, scene, camera, raycaster, stats, controls;
 		var WIDTH = window.innerWidth;
 		var HEIGHT = window.innerHeight;
 		var objects = [];
+		var mouse = new THREE.Vector2(),
+			INTERSECTED;
+
 
 		init();
 		animate();
@@ -51,7 +54,7 @@
 		function init() {
 			container = document.getElementById('container');
 			scene = new THREE.Scene();
-			scene.background = new THREE.Color(0xf0f0f0);
+			scene.background = new THREE.Color(0x000000);
 
 			camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 1, 10000);
 			//camera.position.set(0, 250, 1000);
@@ -89,40 +92,42 @@
 			helper.material.transparent = false;
 			scene.add(helper);
 
-			var geometry = new THREE.PlaneBufferGeometry( 500, 500 );
-			var verticalMirror1 = new THREE.Reflector( geometry, {
+			var geometry = new THREE.PlaneBufferGeometry(500, 500);
+			var verticalMirror1 = new THREE.Reflector(geometry, {
 				clipBias: 0.003,
 				textureWidth: WIDTH * window.devicePixelRatio,
 				textureHeight: HEIGHT * window.devicePixelRatio,
 				color: 0x889999,
 				recursion: 1
-			} );
+			});
 
 			verticalMirror1.position.y = 10;
 			verticalMirror1.position.z = 300;
 			verticalMirror1.rotation.y = 3.14;
-			scene.add( verticalMirror1 );
+			scene.add(verticalMirror1);
 
-			var geometry = new THREE.BoxBufferGeometry( 40, 40, 40 );
-for ( var i = 0; i < 20; i ++ ) {
-	var object = new THREE.Mesh( geometry, new THREE.MeshLambertMaterial( { color: 0xffffff } ) );
+			raycaster = new THREE.Raycaster();
 
-	object.position.x = Math.random() * 1000 - 500;
-	object.position.y = Math.random() * 600 - 300;
-	object.position.z = Math.random() * 1000 - 600;
-	object.rotation.x = Math.random() * 2 * Math.PI;
-	object.rotation.y = Math.random() * 2 * Math.PI;
-	object.rotation.z = Math.random() * 2 * Math.PI;
-	object.scale.x = Math.random() * 2 + 1;
-	object.scale.y = Math.random() * 2 + 1;
-	object.scale.z = Math.random() * 2 + 1;
-	object.castShadow = true;
-	object.receiveShadow = true;
-	scene.add( object );
-	objects.push( object );
 
-}
+			var boxGeometry = new THREE.BoxBufferGeometry(40, 40, 40);
+			for (var i = 0; i < 20; i++) {
+			var object = new THREE.Mesh(boxGeometry, new THREE.MeshLambertMaterial());
 
+				object.position.x = Math.random() * 1000 - 500;
+				object.position.y = Math.random() * 600 - 300;
+				object.position.z = Math.random() * 1000 - 600;
+				object.rotation.x = Math.random() * 2 * Math.PI;
+				object.rotation.y = Math.random() * 2 * Math.PI;
+				object.rotation.z = Math.random() * 2 * Math.PI;
+				object.scale.x = Math.random() * 2 + 1;
+				object.scale.y = Math.random() * 2 + 1;
+				object.scale.z = Math.random() * 2 + 1;
+				object.castShadow = true;
+				object.receiveShadow = true;
+				scene.add(object);
+				objects.push(object);
+
+			}
 
 
 
@@ -137,13 +142,13 @@ for ( var i = 0; i < 20; i ++ ) {
 			container.appendChild(renderer.domElement);
 
 
-				var dragControls = new THREE.DragControls( objects, camera, renderer.domElement );
-				dragControls.addEventListener( 'dragstart', function () {
-					controls.enabled = false;
-				} );
-				dragControls.addEventListener( 'dragend', function () {
-					controls.enabled = true;
-				} );
+			var dragControls = new THREE.DragControls(objects, camera, renderer.domElement);
+			dragControls.addEventListener('dragstart', function() {
+				controls.enabled = false;
+			});
+			dragControls.addEventListener('dragend', function() {
+				controls.enabled = true;
+			});
 
 
 			stats = new Stats();
@@ -169,12 +174,13 @@ for ( var i = 0; i < 20; i ++ ) {
 				//controls.enablePan = false;
 				//controls.enableZoom = false;
 			};
-					var geometry = new THREE.BufferGeometry();
-					var loader = new THREE.JSONLoader();
-					var material = new THREE.ShaderMaterial();
 
+			var geometry = new THREE.BufferGeometry();
+			var loader = new THREE.JSONLoader();
+			var material = new THREE.ShaderMaterial();
+
+			//wevhead
 			loader.load('models/wevhead.json', handle_load5);
-
 
 			function handle_load5(geometry, materials) {
 				var material = new THREE.MultiMaterial(materials);
@@ -183,30 +189,75 @@ for ( var i = 0; i < 20; i ++ ) {
 				wevhead = new THREE.Mesh(geometry, material);
 				scene.add(wevhead);
 
+				wevhead.rotation.y = 3.14;
 				wevhead.position.y = -10;
 				wevhead.position.z = -200;
 				wevhead.scale.set(1.25, 1.25, 1.25);
 
 				//wevhead.rotation.x = 0.4;
 			}
-
 			wevhead = new THREE.Mesh(geometry, material);
 
+			document.addEventListener('mousedown', onDocumentMouseDown, false);
+			window.addEventListener('resize', onWindowResize, false);
+		}
+		//end of init function
+		function onWindowResize() {
+			camera.aspect = window.innerWidth / window.innerHeight;
+			camera.updateProjectionMatrix();
+			renderer.setSize(window.innerWidth, window.innerHeight);
 		}
 
+		function onDocumentMouseDown(event) {
+			event.preventDefault();
+			mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+			mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
 
+			// find intersections
+			raycaster.setFromCamera(mouse, camera);
+			var intersects = raycaster.intersectObjects(objects);
+			if (intersects.length > 0) {
+				if (INTERSECTED != intersects[0].object) {
 
+					if (INTERSECTED) INTERSECTED.material.color.setHex(INTERSECTED.currentHex);
 
-			function animate() {
-				requestAnimationFrame(animate);
-				controls.update();
-				render();
-				stats.update();
+					INTERSECTED = intersects[0].object;
+
+					INTERSECTED.currentHex = INTERSECTED.material.color.getHex();
+
+					INTERSECTED.material.color.setHex('0x' + '00000'+(Math.random()*(1<<24)|0).toString(16)).slice(-6);
+
+					console.log(intersects.length);
+				}
+			} else {
+				if (INTERSECTED) INTERSECTED.material.color.setHex(INTERSECTED.currentHex);
+				INTERSECTED = null;
 			}
+		}
 
-			function render() {
-				renderer.render(scene, camera);
-			};
+		function animate() {
+			requestAnimationFrame(animate);
+			controls.update();
+			render();
+			stats.update();
+		}
+
+		var prevTime = Date.now();
+
+		if (mixer) {
+			var time = Date.now();
+			mixer.update((time - prevTime) * 0.001);
+			prevTime = time;
+		}
+
+		function render() {
+							var timer = Date.now() * 0.0005;
+
+							wevhead.rotation.y += -0.05;
+
+
+			renderer.render(scene, camera);
+		};
 	</script>
 
 </body>
