@@ -247,8 +247,8 @@ function onDocumentMouseMove( event ) {
 
 		function onDocumentMouseDown(event) {
 			event.preventDefault();
-			mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-			mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+			mouse.x = (event.pageX / window.innerWidth) * 2 - 1;
+			mouse.y = -(event.pageY / window.innerHeight) * 2 + 1;
 
 			// find intersections
 			raycaster.setFromCamera(mouse, camera);
@@ -312,6 +312,10 @@ function onDocumentMouseMove( event ) {
 
 							//group.rotation.y += -0.05;
 
+							for (var i = 0; i < objects.length; i++) {
+					        object = objects[i];
+					        object.rotation.y += -0.01;
+								}
 
 			renderer.render(scene, camera);
 		};
