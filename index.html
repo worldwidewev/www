@@ -130,11 +130,13 @@
 				object.castShadow = true;
 				object.receiveShadow = true;
 
-				scene.add(object);
+				//scene.add(object);
 				objects.push(object);
-				//boxesGroup.add(object);
+				boxesGroup.add(object);
 
 			}
+
+			scene.add(boxesGroup);
 
 
 
@@ -307,11 +309,11 @@ function onDocumentMouseMove( event ) {
 		function render() {
 							var timer = Date.now() * 0.0005;
 
-							boxesGroup.rotation.y += -0.01;
+							boxesGroup.rotation.y += -0.001;
 
 							for (var i = 0; i < objects.length; i++) {
 					        object = objects[i];
-					        object.rotation.y += -0.01;
+					        object.rotation.y += -0.005;
 								}
 
 
