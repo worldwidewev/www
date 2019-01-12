@@ -44,10 +44,10 @@
 		var WIDTH = window.innerWidth;
 		var HEIGHT = window.innerHeight;
 		var objects = [];
-		var boxes = [];
 		var mouse = new THREE.Vector2(),
 			INTERSECTED;
 
+		var boxesGroup = new THREE.Group();
 
 		init();
 		animate();
@@ -115,6 +115,7 @@
 
 			var boxGeometry = new THREE.BoxBufferGeometry(40, 40, 40);
 			for (var i = 0; i < 20; i++) {
+
 			var object = new THREE.Mesh(boxGeometry, new THREE.MeshLambertMaterial());
 
 				object.position.x = Math.random() * 1000 - 500;
@@ -129,15 +130,11 @@
 				object.castShadow = true;
 				object.receiveShadow = true;
 
-				group.add(object);
 				scene.add(object);
 				objects.push(object);
+				//boxesGroup.add(object);
 
 			}
-
-			boxes.push(objects);
-
-
 
 
 
@@ -221,8 +218,8 @@
 
     event.preventDefault();
 
-    event.clientX = event.touches[0].pageX;
-    event.clientY = event.touches[0].pageY;
+    event.pageX = event.touches[0].pageX;
+    event.pageY = event.touches[0].pageY;
 
     onDocumentMouseDown( event );
 }
@@ -240,8 +237,8 @@ function onDocumentTouchMove( event ) {
 function onDocumentMouseMove( event ) {
 
     if ( isUserInteracting === true ) {
-      lon = ( onPointerDownPointerX - event.clientX ) * 0.1 + onPointerDownLon;
-      lat = ( event.clientY - onPointerDownPointerY ) * 0.1 + onPointerDownLat;
+      lon = ( onPointerDownPointerX - event.pageX ) * 0.1 + onPointerDownLon;
+      lat = ( event.pageY - onPointerDownPointerY ) * 0.1 + onPointerDownLat;
     }
 }
 
@@ -285,8 +282,8 @@ function onDocumentMouseMove( event ) {
 
   		isUserInteracting = true
 
-  		onPointerDownPointerX = event.clientX;
-  		onPointerDownPointerY = event.clientY;
+  		onPointerDownPointerX = event.pageX;
+  		onPointerDownPointerY = event.pageY;
 
   		onPointerDownLon = lon;
   		onPointerDownLat = lat;
@@ -310,12 +307,14 @@ function onDocumentMouseMove( event ) {
 		function render() {
 							var timer = Date.now() * 0.0005;
 
-							//group.rotation.y += -0.05;
+							boxesGroup.rotation.y += -0.01;
 
 							for (var i = 0; i < objects.length; i++) {
 					        object = objects[i];
 					        object.rotation.y += -0.01;
 								}
+
+
 
 			renderer.render(scene, camera);
 		};
