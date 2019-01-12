@@ -63,7 +63,7 @@
 			camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 5000);
 			//camera.position.set(0, 250, 1000);
 			camera.position.y = 5;
-			camera.position.z = -500;
+			camera.position.z = -1000;
 
 			scene.add(camera);
 			scene.add(new THREE.AmbientLight(0xf0f0f0));
@@ -111,8 +111,9 @@
 				recursion: 1
 			});
 
+			verticalMirror1.opacity = 0.5;
 			verticalMirror1.position.y = 500;
-			verticalMirror1.position.z = 1000;
+			verticalMirror1.position.z = 1200;
 			verticalMirror1.rotation.y = 3.14;
 			scene.add(verticalMirror1);
 
@@ -126,8 +127,9 @@
 				recursion: 1
 			});
 
+			verticalMirror2.opacity = 0.5;
 			verticalMirror2.position.y = 500;
-			verticalMirror2.position.z = -1000;
+			verticalMirror2.position.z = -1200;
 			//verticalMirror2.rotation.y = -3.14;
 			scene.add(verticalMirror2);
 
@@ -141,8 +143,9 @@
 				recursion: 1
 			});
 
+			verticalMirror3.opacity = 0.5;
 			verticalMirror3.position.y = 500;
-			verticalMirror3.position.x = -1000;
+			verticalMirror3.position.x = -1200;
 			verticalMirror3.rotation.y = 1.5708;
 			scene.add(verticalMirror3);
 
@@ -156,15 +159,16 @@
 				recursion: 1
 			});
 
+			verticalMirror4.opacity = 0.5;
 			verticalMirror4.position.y = 500;
-			verticalMirror4.position.x = 1000;
+			verticalMirror4.position.x = 1200;
 			verticalMirror4.rotation.y = -1.5708;
 			scene.add(verticalMirror4);
 
 			raycaster = new THREE.Raycaster();
 
 
-			var boxGeometry = new THREE.BoxBufferGeometry(80, 80, 80);
+			var boxGeometry = new THREE.BoxBufferGeometry(50, 50, 50);
 			for (var i = 0; i < 20; i++) {
 
 			var object = new THREE.Mesh(boxGeometry, new THREE.MeshLambertMaterial());
@@ -250,7 +254,7 @@
 				wevhead.rotation.y = 3.14;
 				wevhead.position.y = -10;
 				wevhead.position.z = 100;
-				wevhead.scale.set(1.75, 1.75, 1.75);
+				wevhead.scale.set(3, 3, 3);
 
 				//wevhead.rotation.x = 0.4;
 			}
