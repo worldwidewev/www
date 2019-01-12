@@ -96,7 +96,7 @@
 			helper.material.transparent = false;
 			scene.add(helper);
 
-			var geometry = new THREE.PlaneBufferGeometry(500, 500);
+			var geometry = new THREE.PlaneBufferGeometry(2000, 2000);
 			var verticalMirror1 = new THREE.Reflector(geometry, {
 				clipBias: 0.003,
 				textureWidth: WIDTH * window.devicePixelRatio,
@@ -105,10 +105,55 @@
 				recursion: 1
 			});
 
-			verticalMirror1.position.y = 10;
-			verticalMirror1.position.z = 300;
+			//verticalMirror1.position.y = 10;
+			verticalMirror1.position.z = 1000;
 			verticalMirror1.rotation.y = 3.14;
 			scene.add(verticalMirror1);
+
+
+			var geometry = new THREE.PlaneBufferGeometry(2000, 2000);
+			var verticalMirror2 = new THREE.Reflector(geometry, {
+				clipBias: 0.003,
+				textureWidth: WIDTH * window.devicePixelRatio,
+				textureHeight: HEIGHT * window.devicePixelRatio,
+				color: 0x889999,
+				recursion: 1
+			});
+
+			//verticalMirror2.position.y = 10;
+			verticalMirror2.position.z = -1000;
+			//verticalMirror2.rotation.y = -3.14;
+			scene.add(verticalMirror2);
+
+
+			var geometry = new THREE.PlaneBufferGeometry(2000, 2000);
+			var verticalMirror3 = new THREE.Reflector(geometry, {
+				clipBias: 0.003,
+				textureWidth: WIDTH * window.devicePixelRatio,
+				textureHeight: HEIGHT * window.devicePixelRatio,
+				color: 0x889999,
+				recursion: 1
+			});
+
+			//verticalMirror3.position.y = 10;
+			verticalMirror3.position.x = -1000;
+			verticalMirror3.rotation.y = 1.5708;
+			scene.add(verticalMirror3);
+
+
+			var geometry = new THREE.PlaneBufferGeometry(2000, 2000);
+			var verticalMirror4 = new THREE.Reflector(geometry, {
+				clipBias: 0.003,
+				textureWidth: WIDTH * window.devicePixelRatio,
+				textureHeight: HEIGHT * window.devicePixelRatio,
+				color: 0x889999,
+				recursion: 1
+			});
+
+			//verticalMirror4.position.y = 10;
+			verticalMirror4.position.x = 1000;
+			verticalMirror4.rotation.y = -1.5708;
+			scene.add(verticalMirror4);
 
 			raycaster = new THREE.Raycaster();
 
@@ -199,7 +244,7 @@
 				wevhead.rotation.y = 3.14;
 				wevhead.position.y = -10;
 				wevhead.position.z = -200;
-				wevhead.scale.set(1.25, 1.25, 1.25);
+				wevhead.scale.set(1.75, 1.75, 1.75);
 
 				//wevhead.rotation.x = 0.4;
 			}
