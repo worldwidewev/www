@@ -206,6 +206,8 @@
 			wevhead = new THREE.Mesh(geometry, material);
 
 			document.addEventListener('mousedown', onDocumentMouseDown, false);
+			document.addEventListener('touchstart', onDocumentMouseDown, false);
+			//document.addEventListener('mousedown touchstart', onDocumentMouseDown, false)
 			window.addEventListener('resize', onWindowResize, false);
 		}
 		//end of init function
@@ -216,15 +218,44 @@
 		}
 
 		function onDocumentTouchStart( event ) {
-    console.log("TouchStart")
+			event.preventDefault();
+			mouse.x = (event.pageX / window.innerWidth) * 2 - 1;
+			mouse.y = -(event.pageY / window.innerHeight) * 2 + 1;
 
-    event.preventDefault();
+			// find intersections
+			raycaster.setFromCamera(mouse, camera);
+			var intersects = raycaster.intersectObjects(objects);
+			//if (intersects.length > 0) {
+			//	if (INTERSECTED != intersects[0].object) {
+			//		if (INTERSECTED) INTERSECTED.material.color.setHex(INTERSECTED.currentHex);
+			//		INTERSECTED = intersects[0].object;
+			//		INTERSECTED.currentHex = INTERSECTED.material.color.getHex();
+			//		INTERSECTED.material.color.setHex('0x' + '00000'+(Math.random()*(1<<24)|0).toString(16)).slice(-6);
+			//		console.log(intersects.length);
+			//	}
 
-    event.pageX = event.touches[0].pageX;
-    event.pageY = event.touches[0].pageY;
+				if (intersects.length > 0) {
+    color = '0x' + '00000'+(Math.random()*(1<<24)|0).toString(16).slice(-6);
+    for (var i = 0; i < objects.length; i++) {
+        object = objects[i];
+        object.material.color.setHex(color);
+    }
+    console.log(intersects.length);
 
-    onDocumentMouseDown( event );
-}
+			} else {
+				if (INTERSECTED) INTERSECTED.material.color.setHex(INTERSECTED.currentHex);
+				INTERSECTED = null;
+			}
+
+  		isUserInteracting = true
+
+  		onPointerDownPointerX = event.pageX;
+  		onPointerDownPointerY = event.pageY;
+
+  		onPointerDownLon = lon;
+  		onPointerDownLat = lat;
+		}
+
 
 function onDocumentTouchMove( event ) {
     console.log("TouchMove")
@@ -243,7 +274,6 @@ function onDocumentMouseMove( event ) {
       lat = ( event.pageY - onPointerDownPointerY ) * 0.1 + onPointerDownLat;
     }
 }
-
 		function onDocumentMouseDown(event) {
 			event.preventDefault();
 			mouse.x = (event.pageX / window.innerWidth) * 2 - 1;
@@ -252,18 +282,12 @@ function onDocumentMouseMove( event ) {
 			// find intersections
 			raycaster.setFromCamera(mouse, camera);
 			var intersects = raycaster.intersectObjects(objects);
-
 			//if (intersects.length > 0) {
 			//	if (INTERSECTED != intersects[0].object) {
-
 			//		if (INTERSECTED) INTERSECTED.material.color.setHex(INTERSECTED.currentHex);
-
 			//		INTERSECTED = intersects[0].object;
-
 			//		INTERSECTED.currentHex = INTERSECTED.material.color.getHex();
-
 			//		INTERSECTED.material.color.setHex('0x' + '00000'+(Math.random()*(1<<24)|0).toString(16)).slice(-6);
-
 			//		console.log(intersects.length);
 			//	}
 
@@ -279,8 +303,6 @@ function onDocumentMouseMove( event ) {
 				if (INTERSECTED) INTERSECTED.material.color.setHex(INTERSECTED.currentHex);
 				INTERSECTED = null;
 			}
-
-
 
   		isUserInteracting = true
 
@@ -299,7 +321,6 @@ function onDocumentMouseMove( event ) {
 		}
 
 		var prevTime = Date.now();
-
 		if (mixer) {
 			var time = Date.now();
 			mixer.update((time - prevTime) * 0.001);
@@ -308,7 +329,6 @@ function onDocumentMouseMove( event ) {
 
 		function render() {
 							var timer = Date.now() * 0.0005;
-
 							//boxesGroup.rotation.y += -0.001;
 
 							for (var i = 0; i < objects.length; i++) {
