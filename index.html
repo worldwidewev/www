@@ -253,28 +253,34 @@ function onDocumentMouseMove( event ) {
 			// find intersections
 			raycaster.setFromCamera(mouse, camera);
 			var intersects = raycaster.intersectObjects(objects);
-			for (var i = 0; i < objects.length; i ++) {
 
-				var box = objects[i]
+			//if (intersects.length > 0) {
+			//	if (INTERSECTED != intersects[0].object) {
 
-			if (intersects.length > 0) {
-				if (INTERSECTED != intersects[0].object) {
+			//		if (INTERSECTED) INTERSECTED.material.color.setHex(INTERSECTED.currentHex);
 
-					if (INTERSECTED) INTERSECTED.material.color.setHex(INTERSECTED.currentHex);
+			//		INTERSECTED = intersects[0].object;
 
-					INTERSECTED = intersects[0].object;
+			//		INTERSECTED.currentHex = INTERSECTED.material.color.getHex();
 
-					INTERSECTED.currentHex = INTERSECTED.material.color.getHex();
+			//		INTERSECTED.material.color.setHex('0x' + '00000'+(Math.random()*(1<<24)|0).toString(16)).slice(-6);
 
-					INTERSECTED.material.color.setHex('0x' + '00000'+(Math.random()*(1<<24)|0).toString(16)).slice(-6);
+			//		console.log(intersects.length);
+			//	}
 
-					console.log(intersects.length);
-				}
+				if (intersects.length > 0) {
+    color = '0x' + '00000'+(Math.random()*(1<<24)|0).toString(16).slice(-6);
+    for (var i = 0; i < objects.length; i++) {
+        object = objects[i];
+        object.material.color.setHex(color);
+    }
+    console.log(intersects.length);
+
 			} else {
 				if (INTERSECTED) INTERSECTED.material.color.setHex(INTERSECTED.currentHex);
 				INTERSECTED = null;
 			}
-		}
+
 
 
   		isUserInteracting = true
