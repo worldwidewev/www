@@ -63,7 +63,7 @@
 			camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 8000);
 			//camera.position.set(0, 250, 1000);
 			camera.position.y = 5;
-			camera.position.z = 100;
+			camera.position.z = 500;
 
 			scene.add(camera);
 			scene.add(new THREE.AmbientLight(0xf0f0f0));
@@ -192,6 +192,7 @@
 			}
 
 			scene.add(boxesGroup);
+			boxesGroup.position.z = -200
 
 
 
@@ -232,9 +233,9 @@
 				controls = new THREE.DeviceOrientationControls(camera, THREE.WebGLRenderer);
 			} else {
 				controls = new THREE.OrbitControls(camera, renderer.domElement);
-				//controls.minPolarAngle = Math.PI / 2 - 0.2;
-				//controls.enablePan = false;
-				//controls.enableZoom = false;
+				controls.minPolarAngle = Math.PI / 2 - 0.2;
+				controls.enablePan = false;
+				controls.enableZoom = false;
 			};
 
 			var geometry = new THREE.BufferGeometry();
@@ -253,7 +254,7 @@
 
 				//wevhead.rotation.y = 3.14;
 				wevhead.position.y = -10;
-				wevhead.position.z = -100;
+				wevhead.position.z = 100;
 				//wevhead.scale.set(3, 3, 3);
 
 				//wevhead.rotation.x = 0.4;
