@@ -47,16 +47,16 @@
 			scene = new THREE.Scene();
 			scene.background = new THREE.Color(0xf0f0f0);
 
-			camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 1, 10000);
+			camera = new THREE.PerspectiveCamera(40, window.innerWidth / window.innerHeight, 1, 10000);
 			//camera.position.set(0, 250, 1000);
-			camera.position.y = 25;
+			camera.position.y = 5;
 			//camera.position.z = 1000;
 
 			scene.add(camera);
 			scene.add(new THREE.AmbientLight(0xf0f0f0));
 
 			//light
-			var light = new THREE.SpotLight(0xffffff, 1.5);
+			var light = new THREE.SpotLight(0xffffff, 0.5);
 			light.position.set(0, 1500, 200);
 			light.castShadow = true;
 			light.shadow = new THREE.LightShadow(new THREE.PerspectiveCamera(70, 1, 200, 2000));
@@ -117,12 +117,35 @@
 				controls = new THREE.DeviceOrientationControls(camera, THREE.WebGLRenderer);
 			} else {
 				controls = new THREE.OrbitControls(camera, renderer.domElement);
-				controls.minPolarAngle = Math.PI / 2 - 0.2;
-				controls.enablePan = false;
-				controls.enableZoom = false;
+				//controls.minPolarAngle = Math.PI / 2 - 0.2;
+				//controls.enablePan = false;
+				//controls.enableZoom = false;
 			};
+					var geometry = new THREE.BufferGeometry();
+					var loader = new THREE.JSONLoader();
+					var material = new THREE.ShaderMaterial();
+
+			loader.load('models/wevhead.json', handle_load5);
+
+
+			function handle_load5(geometry, materials) {
+				var material = new THREE.MultiMaterial(materials);
+				material.morphTargets = true;
+
+				wevhead = new THREE.Mesh(geometry, material);
+				scene.add(wevhead);
+
+				wevhead.position.y = -10;
+				wevhead.position.z = -200;
+
+				//wevhead.rotation.x = 0.4;
+			}
+
+			wevhead = new THREE.Mesh(geometry, material);
 
 		}
+
+
 
 
 			function animate() {
