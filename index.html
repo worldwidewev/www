@@ -32,6 +32,8 @@
 	<script src="js/OrbitControls.js"></script>
 	<script src="js/DeviceOrientationControls.js"></script>
 	<script src="js/Reflector.js"></script>
+	<script src="js/DragControls.js"></script>
+	<script src="js/TrackballControls.js"></script>
 
 
 	<script src="js/stats.min.js"></script>
@@ -41,6 +43,7 @@
 		var renderer, scene, camera, stats, controls;
 		var WIDTH = window.innerWidth;
 		var HEIGHT = window.innerHeight;
+		var objects = [];
 
 		init();
 		animate();
@@ -98,7 +101,32 @@
 			verticalMirror1.position.y = 10;
 			verticalMirror1.position.z = 300;
 			verticalMirror1.rotation.y = 3.14;
-			scene.add( verticalMirror1 );
+			//scene.add( verticalMirror1 );
+
+			var geometry = new THREE.BoxBufferGeometry( 40, 40, 40 );
+for ( var i = 0; i < 20; i ++ ) {
+	var object = new THREE.Reflector( geometry, {
+		clipBias: 0.003,
+		textureWidth: WIDTH * window.devicePixelRatio,
+		textureHeight: HEIGHT * window.devicePixelRatio,
+		color: 0x889999,
+		recursion: 1
+	} );
+
+	object.position.x = Math.random() * 1000 - 500;
+	object.position.y = Math.random() * 600 - 300;
+	object.position.z = Math.random() * 800 - 400;
+	object.rotation.x = Math.random() * 2 * Math.PI;
+	object.rotation.y = Math.random() * 2 * Math.PI;
+	object.rotation.z = Math.random() * 2 * Math.PI;
+	object.scale.x = Math.random() * 2 + 1;
+	object.scale.y = Math.random() * 2 + 1;
+	object.scale.z = Math.random() * 2 + 1;
+	object.castShadow = false;
+	object.receiveShadow = true;
+	scene.add( object );
+	objects.push( object );
+}
 
 
 
@@ -111,6 +139,15 @@
 			renderer.setSize(window.innerWidth, window.innerHeight);
 			renderer.shadowMap.enabled = true;
 			container.appendChild(renderer.domElement);
+
+
+				var dragControls = new THREE.DragControls( objects, camera, renderer.domElement );
+				dragControls.addEventListener( 'dragstart', function () {
+					controls.enabled = false;
+				} );
+				dragControls.addEventListener( 'dragend', function () {
+					controls.enabled = true;
+				} );
 
 
 			stats = new Stats();
