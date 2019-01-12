@@ -31,6 +31,7 @@
 	<script src="js/three.js"></script>
 	<script src="js/OrbitControls.js"></script>
 	<script src="js/DeviceOrientationControls.js"></script>
+	<script src="js/Reflector.js"></script>
 
 
 	<script src="js/stats.min.js"></script>
@@ -38,6 +39,8 @@
 	<script>
 		var container, stats;
 		var renderer, scene, camera, stats, controls;
+		var WIDTH = window.innerWidth;
+		var HEIGHT = window.innerHeight;
 
 		init();
 		animate();
@@ -83,10 +86,22 @@
 			helper.material.transparent = true;
 			scene.add(helper);
 
+			var geometry = new THREE.PlaneBufferGeometry( 500, 500 );
+			var verticalMirror1 = new THREE.Reflector( geometry, {
+				clipBias: 0.003,
+				textureWidth: WIDTH * window.devicePixelRatio,
+				textureHeight: HEIGHT * window.devicePixelRatio,
+				color: 0x889999,
+				recursion: 1
+			} );
 
-			//var axes = new THREE.AxesHelper( 1000 );
-			//axes.position.set( - 500, - 500, - 500 );
-			//scene.add( axes );
+			verticalMirror1.position.y = 10;
+			verticalMirror1.position.z = 300;
+			verticalMirror1.rotation.y = 3.14;
+			scene.add( verticalMirror1 );
+
+
+
 
 
 			renderer = new THREE.WebGLRenderer({
