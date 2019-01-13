@@ -171,7 +171,7 @@
 			var boxGeometry = new THREE.BoxBufferGeometry(50, 50, 50);
 			for (var i = 0; i < 20; i++) {
 
-			var object = new THREE.Mesh(boxGeometry, new THREE.MeshLambertMaterial());
+			var object = new THREE.Mesh(boxGeometry, new THREE.MeshPhongMaterial());
 
 				object.position.x = Math.random() * 1500 - 700;
 				object.position.y = Math.random() * 1000 - 700;
@@ -234,6 +234,8 @@
 			} else {
 				controls = new THREE.OrbitControls(camera, renderer.domElement);
 				controls.minPolarAngle = Math.PI / 2 - 0.2;
+				controls.maxPolarAngle = Math.PI / 2 + 0.2;
+
 				controls.enablePan = false;
 				controls.enableZoom = false;
 			};
