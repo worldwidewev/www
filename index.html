@@ -211,8 +211,8 @@
 			dragControls.addEventListener('dragstart', function() {
 				controls.enabled = false;
 			});
-			dragControls.addEventListener('touch',function() {
-				controls.enabled = true;
+			dragControls.addEventListener('touchstart',function() {
+				controls.enabled = false;
 			});
 			dragControls.addEventListener('dragend', function() {
 				controls.enabled = true;
