@@ -312,8 +312,8 @@
 			}
 			stream = new THREE.Mesh(geometry, material);
 
-			document.addEventListener('mousedown', onDocumentMouseDown, false);
-			document.addEventListener('touchstart', onDocumentMouseDown, false);
+			document.addEventListener('mousedown', onMouseDown, false);
+			document.addEventListener('touchstart', onMouseDown, false);
 			window.addEventListener('resize', onWindowResize, false);
 		}
 		//end of init function
@@ -354,13 +354,6 @@
 				INTERSECTED = null;
 			}
 
-			//isUserInteracting = true
-
-			//onPointerDownPointerX = event.pageX;
-			//onPointerDownPointerY = event.pageY;
-
-			//onPointerDownLon = lon;
-			//onPointerDownLat = lat;
 		}
 
 
@@ -370,11 +363,6 @@
 			mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
 			mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
 
-			//if (event.touches.length == 1) {
-			//	event.preventDefault();
-			//	lon = (onPointerDownPointerX - event.touches[0].pageX) * 0.1 + onPointerDownLon;
-			//	lat = (event.touches[0].pageY - onPointerDownPointerY) * 0.1 + onPointerDownLat;
-			//}
 		}
 
 		function onDocumentMouseMove(event) {
@@ -382,13 +370,9 @@
 			mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
 			mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
 
-			//if (isUserInteracting === true) {
-			//	lon = (onPointerDownPointerX - event.pageX) * 0.1 + onPointerDownLon;
-			//	lat = (event.pageY - onPointerDownPointerY) * 0.1 + onPointerDownLat;
-			//}
 		}
 
-		function onDocumentMouseDown(event) {
+		function onMouseDown(event) {
 			event.preventDefault();
 			mouse.x = (event.pageX / window.innerWidth) * 2 - 1;
 			mouse.y = -(event.pageY / window.innerHeight) * 2 + 1;
@@ -396,11 +380,6 @@
 			// find intersections
 			raycaster.setFromCamera(mouse, camera);
 
-			//var headintersect = raycaster.intersectObject(wevhead);
-			//var link1 = 'https://distrokid.com/hyperfollow/wev/gbMx'
-			//if (headintersect.length > 0) {
-			//	window.open(link1);
-			//}
 
 			var intersects = raycaster.intersectObjects(objects);
 
@@ -417,13 +396,6 @@
 				INTERSECTED = null;
 			}
 
-			//isUserInteracting = true
-
-			//onPointerDownPointerX = event.pageX;
-			//onPointerDownPointerY = event.pageY;
-
-			//onPointerDownLon = lon;
-			//onPointerDownLat = lat;
 		}
 
 		function animate() {
