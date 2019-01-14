@@ -213,10 +213,10 @@
 
 			var dragControls = new THREE.DragControls(objects, camera, renderer.domElement);
 			dragControls.addEventListener('touchstart', function() {
-				dragControls.enabled = false;
+				dragControls.enabled = true;
 			});
 			dragControls.addEventListener('touchend', function() {
-				dragControls.enabled = true;
+				dragControls.enabled = false;
 			});
 
 
