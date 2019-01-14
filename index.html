@@ -238,6 +238,12 @@
 
 			if (window.mobilecheck() == true) {
 				controls = new THREE.DeviceOrientationControls(camera, THREE.WebGLRenderer);
+				dragControls.addEventListener('touchstart', function() {
+					dragControls.enabled = false;
+				});
+				dragControls.addEventListener('touchend', function() {
+					dragControls.enabled = true;
+				});
 			} else {
 				controls = new THREE.OrbitControls(camera, renderer.domElement);
 				controls.minPolarAngle = Math.PI / 2 - 0.2;
