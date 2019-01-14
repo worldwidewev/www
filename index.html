@@ -212,8 +212,11 @@
 
 
 			var dragControls = new THREE.DragControls(objects, camera, renderer.domElement);
-			dragControls.addEventListener('touchmove', function() {
+			dragControls.addEventListener('touchstart', function() {
 				dragControls.enabled = true;
+			});
+			dragControls.addEventListener('touchend', function() {
+				dragControls.enabled = false;
 			});
 
 
@@ -266,13 +269,13 @@
 
 				DDDINK.addURL(wevhead, "https://distrokid.com/hyperfollow/wev/gbMx");
 				DDDINK.domEvent.setGlobalLinkConfig('_self', 'ON', 'ON', 0xffffff);
-				DDDINK.readRendererObj(renderer, scene, camera );
+				DDDINK.readRendererObj(renderer, scene, camera, );
 				DDDINK.domEvent.addFnc('Fn', 'A');
 
 				//wevhead.rotation.y = 3.14;
 				wevhead.position.y = -10;
 				wevhead.position.z = -8;
-				wevhead.scale.set(10, 10, 10);
+				wevhead.scale.set(3, 3, 3);
 
 				//wevhead.rotation.x = 0.4;
 			}
@@ -320,7 +323,7 @@
 			renderer.setSize(window.innerWidth, window.innerHeight);
 		}
 
-		function onDocumentTouchStart(event) {
+		function onTouchStart(event) {
 			event.preventDefault();
 			mouse.x = (event.pageX / window.innerWidth) * 2 - 1;
 			mouse.y = -(event.pageY / window.innerHeight) * 2 + 1;
