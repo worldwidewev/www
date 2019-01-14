@@ -45,6 +45,7 @@
 		var WIDTH = window.innerWidth;
 		var HEIGHT = window.innerHeight;
 		var objects = [];
+
 		var mouse = new THREE.Vector2(),
 			INTERSECTED;
 
@@ -209,12 +210,12 @@
 
 
 			var dragControls = new THREE.DragControls(objects, camera, renderer.domElement);
-			dragControls.addEventListener('dragstart', function() {
-				controls.enabled = false;
-			});
-			dragControls.addEventListener('dragend', function() {
-				controls.enabled = true;
-			});
+			//dragControls.addEventListener('dragstart', function() {
+			//	controls.enabled = false;
+			//});
+			//dragControls.addEventListener('dragend', function() {
+			//	controls.enabled = true;
+			//});
 
 
 			stats = new Stats();
