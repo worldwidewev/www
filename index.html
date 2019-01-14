@@ -354,14 +354,14 @@
 				INTERSECTED = null;
 			}
 
-			isUserInteracting = true
+		//	isUserInteracting = true
 
-			onPointerDownPointerX = event.pageX;
-			onPointerDownPointerY = event.pageY;
+		//	onPointerDownPointerX = event.pageX;
+		//	onPointerDownPointerY = event.pageY;
 
-			onPointerDownLon = lon;
-			onPointerDownLat = lat;
-		}
+		//	onPointerDownLon = lon;
+		//	onPointerDownLat = lat;
+		//}
 
 
 		function onDocumentTouchMove(event) {
@@ -370,11 +370,11 @@
 			mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
 			mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
 
-			if (event.touches.length == 1) {
-				event.preventDefault();
-				lon = (onPointerDownPointerX - event.touches[0].pageX) * 0.1 + onPointerDownLon;
-				lat = (event.touches[0].pageY - onPointerDownPointerY) * 0.1 + onPointerDownLat;
-			}
+		//	if (event.touches.length == 1) {
+		//		event.preventDefault();
+		//		lon = (onPointerDownPointerX - event.touches[0].pageX) * 0.1 + onPointerDownLon;
+		//		lat = (event.touches[0].pageY - onPointerDownPointerY) * 0.1 + onPointerDownLat;
+		//	}
 		}
 
 		function onDocumentMouseMove(event) {
@@ -382,10 +382,10 @@
 			mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
 			mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
 
-			if (isUserInteracting === true) {
-				lon = (onPointerDownPointerX - event.pageX) * 0.1 + onPointerDownLon;
-				lat = (event.pageY - onPointerDownPointerY) * 0.1 + onPointerDownLat;
-			}
+		//	if (isUserInteracting === true) {
+		//		lon = (onPointerDownPointerX - event.pageX) * 0.1 + onPointerDownLon;
+		//		lat = (event.pageY - onPointerDownPointerY) * 0.1 + onPointerDownLat;
+		//	}
 		}
 
 		function onDocumentMouseDown(event) {
@@ -417,14 +417,14 @@
 				INTERSECTED = null;
 			}
 
-			isUserInteracting = true
+		//	isUserInteracting = true
 
-			onPointerDownPointerX = event.pageX;
-			onPointerDownPointerY = event.pageY;
+		//	onPointerDownPointerX = event.pageX;
+		//	onPointerDownPointerY = event.pageY;
 
-			onPointerDownLon = lon;
-			onPointerDownLat = lat;
-		}
+		//	onPointerDownLon = lon;
+		//	onPointerDownLat = lat;
+		//}
 
 		function animate() {
 			requestAnimationFrame(animate);
