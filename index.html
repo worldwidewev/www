@@ -303,7 +303,7 @@
 			stream = new THREE.Mesh(geometry, material);
 
 			document.addEventListener('mousedown', onDocumentMouseDown, false);
-			document.addEventListener('touchstart', onDocumentMouseDown, false);
+			document.addEventListener('touchstart', onDocumentMouseDown, true);
 			//document.addEventListener('mousedown touchstart', onDocumentMouseDown, false)
 			window.addEventListener('resize', onWindowResize, false);
 		}
@@ -327,7 +327,7 @@
 			if (headintersect.length > 0){
 					window.open(link1);
 				}
-				
+
 			var intersects = raycaster.intersectObjects(objects);
 			//if (intersects.length > 0) {
 			//	if (INTERSECTED != intersects[0].object) {
