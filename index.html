@@ -357,6 +357,9 @@
 
 function onDocumentTouchMove( event ) {
     console.log("TouchMove")
+		event.preventDefault();
+		mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+		mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
 
     if ( event.touches.length == 1 ) {
       event.preventDefault();
@@ -366,6 +369,9 @@ function onDocumentTouchMove( event ) {
 }
 
 function onDocumentMouseMove( event ) {
+	event.preventDefault();
+	mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+	mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
 
     if ( isUserInteracting === true ) {
       lon = ( onPointerDownPointerX - event.pageX ) * 0.1 + onPointerDownLon;
