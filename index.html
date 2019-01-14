@@ -257,10 +257,10 @@
 				wevhead = new THREE.Mesh(geometry, material);
 				scene.add(wevhead);
 
-				DDDINK.addURL(wevhead, "https://distrokid.com/hyperfollow/wev/gbMx");
-				DDDINK.domEvent.setGlobalLinkConfig('_self', 'ON', 'ON', 0xffffff);
-				DDDINK.readRendererObj(renderer, scene, camera,);
-				DDDINK.domEvent.addFnc('Fn', 'A');
+				//DDDINK.addURL(wevhead, "https://distrokid.com/hyperfollow/wev/gbMx");
+				//DDDINK.domEvent.setGlobalLinkConfig('_self', 'ON', 'ON', 0xffffff);
+				//DDDINK.readRendererObj(renderer, scene, camera,);
+				//DDDINK.domEvent.addFnc('Fn', 'A');
 
 				//wevhead.rotation.y = 3.14;
 				wevhead.position.y = -10;
@@ -321,6 +321,12 @@
 
 			// find intersections
 			raycaster.setFromCamera(mouse, camera);
+			var headintersect = raycaster.intersectObjects(wevhead);
+			var link1 = 'https://distrokid.com/hyperfollow/wev/gbMx'
+			if (headintersect.length === 0){
+					window.open(link1);
+				}
+				
 			var intersects = raycaster.intersectObjects(objects);
 			//if (intersects.length > 0) {
 			//	if (INTERSECTED != intersects[0].object) {
@@ -386,6 +392,13 @@ function onDocumentMouseMove( event ) {
 
 			// find intersections
 			raycaster.setFromCamera(mouse, camera);
+
+			var headintersect = raycaster.intersectObjects(wevhead);
+			var link1 = 'https://distrokid.com/hyperfollow/wev/gbMx'
+			if (headintersect.length === 0){
+					window.open(link1);
+				}
+
 			var intersects = raycaster.intersectObjects(objects);
 			//if (intersects.length > 0) {
 			//	if (INTERSECTED != intersects[0].object) {
