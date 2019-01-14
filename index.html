@@ -210,12 +210,7 @@
 
 
 			var dragControls = new THREE.DragControls(objects, camera, renderer.domElement);
-			//dragControls.addEventListener('dragstart', function() {
-			//	controls.enabled = false;
-			//});
-			//dragControls.addEventListener('dragend', function() {
-			//	controls.enabled = true;
-			//});
+
 
 
 			stats = new Stats();
@@ -239,6 +234,12 @@
 				controls = new THREE.OrbitControls(camera, renderer.domElement);
 				controls.minPolarAngle = Math.PI / 2 - 0.2;
 				controls.maxPolarAngle = Math.PI / 2 + 0.2;
+				dragControls.addEventListener('dragstart', function() {
+					controls.enabled = false;
+				});
+				dragControls.addEventListener('dragend', function() {
+					controls.enabled = true;
+				});
 
 				//controls.enablePan = false;
 				//controls.enableZoom = false;
@@ -258,7 +259,7 @@
 				wevhead = new THREE.Mesh(geometry, material);
 				scene.add(wevhead);
 
-				//DDDINK.addURL(wevhead, "https://distrokid.com/hyperfollow/wev/gbMx");
+				DDDINK.addURL(wevhead, "https://distrokid.com/hyperfollow/wev/gbMx");
 				DDDINK.domEvent.setGlobalLinkConfig('_self', 'ON', 'ON', 0xffffff);
 				DDDINK.readRendererObj(renderer, scene, camera,);
 				DDDINK.domEvent.addFnc('Fn', 'A');
