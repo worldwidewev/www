@@ -62,7 +62,7 @@
 			var group = new THREE.Group();
 			scene.add(group);
 
-			camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 8000);
+			camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 300, 8000);
 			//camera.position.set(0, 250, 1000);
 			camera.position.y = 5;
 			camera.position.z = 500;
@@ -187,6 +187,7 @@
 				object.castShadow = true;
 				object.receiveShadow = true;
 
+
 				//scene.add(object);
 				objects.push(object);
 				boxesGroup.add(object);
@@ -212,6 +213,9 @@
 				controls.enabled = false;
 			});
 			dragControls.addEventListener('touchstart',function() {
+				controls.enabled = false;
+			});
+			dragControls.addEventListener('touchend',function() {
 				controls.enabled = false;
 			});
 			dragControls.addEventListener('dragend', function() {
