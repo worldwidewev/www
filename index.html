@@ -317,7 +317,45 @@
 			renderer.setSize(window.innerWidth, window.innerHeight);
 		}
 
+		function onDocumentTouchStart(event) {
+			event.preventDefault();
+			mouse.x = (event.pageX / window.innerWidth) * 2 - 1;
+			mouse.y = -(event.pageY / window.innerHeight) * 2 + 1;
 
+			// find intersections
+			raycaster.setFromCamera(mouse, camera);
+
+		//	var headintersect = raycaster.intersectObject(wevhead);
+		//	var link1 = 'https://distrokid.com/hyperfollow/wev/gbMx'
+		//	if (headintersect.length > 0) {
+		//		window.open(link1);
+		//	}
+
+			var intersects = raycaster.intersectObjects(objects);
+
+			if (intersects.length > 0) {
+
+
+				color = '0x' + '009dff' + (Math.random() * (1 << 24) | 0).toString(16).slice(-6);
+				for (var i = 0; i < objects.length; i++) {
+					object = objects[i];
+					object.material.color.setHex(color);
+				}
+				console.log(intersects.length);
+
+			} else {
+				if (INTERSECTED) INTERSECTED.material.color.setHex(INTERSECTED.currentHex);
+				INTERSECTED = null;
+			}
+
+			isUserInteracting = true
+
+			onPointerDownPointerX = event.pageX;
+			onPointerDownPointerY = event.pageY;
+
+			onPointerDownLon = lon;
+			onPointerDownLat = lat;
+		}
 
 
 		function onDocumentTouchMove(event) {
