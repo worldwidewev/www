@@ -35,8 +35,9 @@
 	<script src="js/DragControls.js"></script>
 	<script src="js/TrackballControls.js"></script>
 	<script src="js/Projector.js"></script>
-
+	<script src="js/3Dink.js"></script>
 	<script src="js/stats.min.js"></script>
+	<script src="js/Tween.js"></script>
 
 	<script>
 		var container, stats, clock, mixer;
@@ -48,6 +49,7 @@
 			INTERSECTED;
 
 		var boxesGroup = new THREE.Group();
+		var tween;
 
 		init();
 		animate();
@@ -233,11 +235,11 @@
 				controls = new THREE.DeviceOrientationControls(camera, THREE.WebGLRenderer);
 			} else {
 				controls = new THREE.OrbitControls(camera, renderer.domElement);
-				controls.minPolarAngle = Math.PI / 2 - 0.2;
-				controls.maxPolarAngle = Math.PI / 2 + 0.2;
+				//controls.minPolarAngle = Math.PI / 2 - 0.2;
+				//controls.maxPolarAngle = Math.PI / 2 + 0.2;
 
-				controls.enablePan = false;
-				controls.enableZoom = false;
+				//controls.enablePan = false;
+				//controls.enableZoom = false;
 			};
 
 			var geometry = new THREE.BufferGeometry();
@@ -254,6 +256,11 @@
 				wevhead = new THREE.Mesh(geometry, material);
 				scene.add(wevhead);
 
+				DDDINK.addURL(wevhead, "https://distrokid.com/hyperfollow/wev/gbMx");
+				DDDINK.domEvent.setGlobalLinkConfig('_self', 'ON', 'ON', 0xffffff);
+				DDDINK.readRendererObj(renderer, scene, camera);
+				DDDINK.domEvent.addFnc('Fn', 'A');
+
 				//wevhead.rotation.y = 3.14;
 				wevhead.position.y = -10;
 				wevhead.position.z = -100;
@@ -262,6 +269,21 @@
 				//wevhead.rotation.x = 0.4;
 			}
 			wevhead = new THREE.Mesh(geometry, material);
+
+			loader.load('models/lookup.json', handle_load12);
+
+			function handle_load12(geometry, materials) {
+				var material = new THREE.MultiMaterial(materials);
+				material.morphTargets = true;
+
+				lookup = new THREE.Mesh(geometry, material);
+				scene.add(lookup);
+
+
+				lookup.position.y = -400;
+				lookup.position.z = -20;
+				lookup.scale.set(10, 10, 10);
+			}
 
 			document.addEventListener('mousedown', onDocumentMouseDown, false);
 			document.addEventListener('touchstart', onDocumentMouseDown, false);
@@ -293,6 +315,8 @@
 			//	}
 
 				if (intersects.length > 0) {
+
+
     color = '0x' + '00000'+(Math.random()*(1<<24)|0).toString(16).slice(-6);
     for (var i = 0; i < objects.length; i++) {
         object = objects[i];
