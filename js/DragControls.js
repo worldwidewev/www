@@ -198,6 +198,12 @@ THREE.DragControls = function ( _objects, _camera, _domElement ) {
 
 		_raycaster.setFromCamera( _mouse, _camera );
 
+		var headintersect = raycaster.intersectObject(wevhead);
+		var link1 = 'https://distrokid.com/hyperfollow/wev/gbMx'
+		if (headintersect.length > 0) {
+			window.open(link1);
+			}
+
 		var intersects = _raycaster.intersectObjects( _objects );
 
 		if ( intersects.length > 0 ) {
