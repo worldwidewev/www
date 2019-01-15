@@ -222,7 +222,6 @@ THREE.DragControls = function ( _objects, _camera, _domElement ) {
 
 			scope.dispatchEvent( { type: 'dragstart', object: _selected } );
 
-			event.stopPropagation();
 
 		}
 
