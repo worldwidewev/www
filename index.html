@@ -37,7 +37,7 @@
 	<script src="js/Projector.js"></script>
 	<script src="js/3Dink.js"></script>
 	<script src="js/stats.min.js"></script>
-	<script src="js/Tween.js"></script>
+	<script src="js/hammer.min.js"></script>
 
 	<script>
 		var container, stats, clock, mixer;
@@ -273,10 +273,10 @@
 				wevhead = new THREE.Mesh(geometry, material);
 				scene.add(wevhead);
 
-				//DDDINK.addURL(wevhead, "https://distrokid.com/hyperfollow/wev/gbMx");
-				//DDDINK.domEvent.setGlobalLinkConfig('_self', 'ON', 'ON', 0xffffff);
-				//DDDINK.readRendererObj(renderer, scene, camera, );
-				//DDDINK.domEvent.addFnc('Fn', 'A');
+				DDDINK.addURL(wevhead, "https://distrokid.com/hyperfollow/wev/gbMx");
+				DDDINK.domEvent.setGlobalLinkConfig('_self', 'ON', 'ON', 0xffffff);
+				DDDINK.readRendererObj(renderer, scene, camera, );
+				DDDINK.domEvent.addFnc('Fn', 'A');
 
 				//wevhead.rotation.y = 3.14;
 				wevhead.position.y = -10;
@@ -286,6 +286,10 @@
 				//wevhead.rotation.x = 0.4;
 			}
 			wevhead = new THREE.Mesh(geometry, material);
+
+			var mc = new Hammer.Manager(wevhead);
+
+
 
 			loader.load('models/lookup.json', handle_load2);
 
@@ -318,8 +322,8 @@
 			}
 			stream = new THREE.Mesh(geometry, material);
 
-			document.addEventListener('mousedown', onDocumentMouseDown, false);
-			document.addEventListener('touchstart', onDocumentMouseDown, false);
+			//document.addEventListener('mousedown', onDocumentMouseDown, false);
+			//document.addEventListener('touchstart', onDocumentMouseDown, false);
 			window.addEventListener('resize', onWindowResize, false);
 		}
 		//end of init function
