@@ -70,6 +70,35 @@
 			scene.add(camera);
 			scene.add(new THREE.AmbientLight(0xf0f0f0));
 
+
+
+						var geometry = new THREE.BufferGeometry();
+						var loader = new THREE.JSONLoader();
+						var material = new THREE.ShaderMaterial();
+
+						//wevhead
+						loader.load('models/wevhead.json', handle_load1);
+
+						function handle_load1(geometry, materials) {
+							var material = new THREE.MultiMaterial(materials);
+							material.morphTargets = true;
+
+							wevhead = new THREE.Mesh(geometry, material);
+							scene.add(wevhead);
+
+							DDDINK.addURL(wevhead, "https://distrokid.com/hyperfollow/wev/gbMx");
+							DDDINK.domEvent.setGlobalLinkConfig('_self', 'ON', 'ON', 0xffffff);
+							DDDINK.readRendererObj(renderer, scene, camera);
+							DDDINK.domEvent.addFnc('Fn', 'A');
+
+							//wevhead.rotation.y = 3.14;
+							wevhead.position.y = -10;
+							wevhead.position.z = -8;
+							wevhead.scale.set(3, 3, 3);
+
+							//wevhead.rotation.x = 0.4;
+						}
+						wevhead = new THREE.Mesh(geometry, material);
 			//light
 			var light = new THREE.SpotLight(0xffffff, 0.5);
 			light.position.set(0, 1500, 200);
@@ -246,34 +275,6 @@
 				//controls.enableZoom = false;
 			};
 
-
-			var geometry = new THREE.BufferGeometry();
-			var loader = new THREE.JSONLoader();
-			var material = new THREE.ShaderMaterial();
-
-			//wevhead
-			loader.load('models/wevhead.json', handle_load1);
-
-			function handle_load1(geometry, materials) {
-				var material = new THREE.MultiMaterial(materials);
-				material.morphTargets = true;
-
-				wevhead = new THREE.Mesh(geometry, material);
-				scene.add(wevhead);
-
-				//DDDINK.addURL(wevhead, "https://distrokid.com/hyperfollow/wev/gbMx");
-				DDDINK.domEvent.setGlobalLinkConfig('_self', 'ON', 'ON', 0xffffff);
-				DDDINK.readRendererObj(renderer, scene, camera);
-				DDDINK.domEvent.addFnc('Fn', 'A');
-
-				//wevhead.rotation.y = 3.14;
-				wevhead.position.y = -10;
-				wevhead.position.z = -8;
-				wevhead.scale.set(3, 3, 3);
-
-				//wevhead.rotation.x = 0.4;
-			}
-			wevhead = new THREE.Mesh(geometry, material);
 
 			container.addEventListener('touchstart', function() {
 
