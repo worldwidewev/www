@@ -259,7 +259,7 @@
 
 			if (window.mobilecheck() == true) {
 				controls = new THREE.DeviceOrientationControls(camera, THREE.WebGLRenderer);
-				
+
 			} else {
 				controls = new THREE.OrbitControls(camera, renderer.domElement);
 				controls.minPolarAngle = Math.PI / 2 - 0.2;
@@ -421,9 +421,11 @@
 			}
 
 			isUserInteracting = true
+			lon = (onPointerDownPointerX - event.pageX) * 0.1 + onPointerDownLon;
+			lat = (event.pageY - onPointerDownPointerY) * 0.1 + onPointerDownLat;
 
-			onPointerDownPointerX = event.pageX;
-			onPointerDownPointerY = event.pageY;
+			//onPointerDownPointerX = event.pageX;
+			//onPointerDownPointerY = event.pageY;
 
 			onPointerDownLon = lon;
 			onPointerDownLat = lat;
