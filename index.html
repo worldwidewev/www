@@ -37,7 +37,7 @@
 	<script src="js/Projector.js"></script>
 	<script src="js/3Dink.js"></script>
 	<script src="js/stats.min.js"></script>
-	<script src="js/hammer.min.js"></script>
+	<script src="js/Tween.js"></script>
 
 	<script>
 		var container, stats, clock, mixer;
@@ -45,7 +45,6 @@
 		var WIDTH = window.innerWidth;
 		var HEIGHT = window.innerHeight;
 		var objects = [];
-
 		var mouse = new THREE.Vector2(),
 			INTERSECTED;
 
@@ -63,7 +62,7 @@
 			var group = new THREE.Group();
 			scene.add(group);
 
-			camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 300, 8000);
+			camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 8000);
 			//camera.position.set(0, 250, 1000);
 			camera.position.y = 5;
 			camera.position.z = 500;
@@ -174,9 +173,7 @@
 			var boxGeometry = new THREE.BoxBufferGeometry(50, 50, 50);
 			for (var i = 0; i < 20; i++) {
 
-				var object = new THREE.Mesh(boxGeometry, new THREE.MeshPhongMaterial({
-					color: 0x009dff
-				}));
+			var object = new THREE.Mesh(boxGeometry, new THREE.MeshPhongMaterial({color: 0x009dff}));
 
 				object.position.x = Math.random() * 1500 - 700;
 				object.position.y = Math.random() * 1000 - 700;
@@ -189,7 +186,6 @@
 				object.scale.z = Math.random() * 2 + 1;
 				object.castShadow = true;
 				object.receiveShadow = true;
-
 
 				//scene.add(object);
 				objects.push(object);
@@ -212,15 +208,12 @@
 
 
 			var dragControls = new THREE.DragControls(objects, camera, renderer.domElement);
-			dragControls.addEventListener('touchstart', function() {
-				dragControls.enabled = true;
+			dragControls.addEventListener('dragstart', function() {
+				controls.enabled = false;
 			});
-			dragControls.addEventListener('touchend', function() {
-				dragControls.enabled = false;
+			dragControls.addEventListener('dragend', function() {
+				controls.enabled = true;
 			});
-
-
-
 
 
 			stats = new Stats();
@@ -240,22 +233,10 @@
 
 			if (window.mobilecheck() == true) {
 				controls = new THREE.DeviceOrientationControls(camera, THREE.WebGLRenderer);
-				dragControls.addEventListener('touchstart', function() {
-					dragControls.enabled = false;
-				});
-				dragControls.addEventListener('touchend', function() {
-					dragControls.enabled = true;
-				});
 			} else {
 				controls = new THREE.OrbitControls(camera, renderer.domElement);
 				controls.minPolarAngle = Math.PI / 2 - 0.2;
 				controls.maxPolarAngle = Math.PI / 2 + 0.2;
-				dragControls.addEventListener('dragstart', function() {
-					controls.enabled = false;
-				});
-				dragControls.addEventListener('dragend', function() {
-					controls.enabled = true;
-				});
 
 				//controls.enablePan = false;
 				//controls.enableZoom = false;
@@ -275,21 +256,19 @@
 				wevhead = new THREE.Mesh(geometry, material);
 				scene.add(wevhead);
 
-				//DDDINK.addURL(wevhead, "https://distrokid.com/hyperfollow/wev/gbMx");
-				//DDDINK.domEvent.setGlobalLinkConfig('_self', 'ON', 'ON', 0xffffff);
-				//DDDINK.readRendererObj(renderer, scene, camera, );
-				//DDDINK.domEvent.addFnc('Fn', 'A');
+				DDDINK.addURL(wevhead, "https://distrokid.com/hyperfollow/wev/gbMx");
+				DDDINK.domEvent.setGlobalLinkConfig('_self', 'ON', 'ON', 0xffffff);
+				DDDINK.readRendererObj(renderer, scene, camera);
+				DDDINK.domEvent.addFnc('Fn', 'A');
 
 				//wevhead.rotation.y = 3.14;
 				wevhead.position.y = -10;
-				wevhead.position.z = -8;
+				wevhead.position.z = -100;
 				wevhead.scale.set(3, 3, 3);
 
 				//wevhead.rotation.x = 0.4;
 			}
 			wevhead = new THREE.Mesh(geometry, material);
-
-				// find intersections
 
 			loader.load('models/lookup.json', handle_load2);
 
@@ -301,7 +280,7 @@
 				scene.add(lookup);
 
 
-				lookup.position.y = -300;
+				lookup.position.y = -200;
 				lookup.position.z = 300;
 				lookup.scale.set(12, 12, 12);
 			}
@@ -317,13 +296,14 @@
 
 
 				stream.position.y = 70;
-				stream.position.z = -8;
+				stream.position.z = -100;
 				stream.scale.set(10, 10, 10);
 			}
 			stream = new THREE.Mesh(geometry, material);
 
-			//document.addEventListener('mousedown', onDocumentMouseDown, false);
-			//document.addEventListener('touchstart', onDocumentMouseDown, false);
+			document.addEventListener('mousedown', onDocumentMouseDown, false);
+			document.addEventListener('touchstart', onDocumentMouseDown, false);
+			//document.addEventListener('mousedown touchstart', onDocumentMouseDown, false)
 			window.addEventListener('resize', onWindowResize, false);
 		}
 		//end of init function
@@ -333,53 +313,65 @@
 			renderer.setSize(window.innerWidth, window.innerHeight);
 		}
 
-		function onDocumentTouchStart(event) {
+		function onDocumentTouchStart( event ) {
 			event.preventDefault();
 			mouse.x = (event.pageX / window.innerWidth) * 2 - 1;
 			mouse.y = -(event.pageY / window.innerHeight) * 2 + 1;
 
 			// find intersections
 			raycaster.setFromCamera(mouse, camera);
-
-			var headintersect = raycaster.intersectObject(wevhead);
-			var link1 = 'https://distrokid.com/hyperfollow/wev/gbMx'
-			if (headintersect.length > 0) {
-				window.open(link1);
-			}
-
 			var intersects = raycaster.intersectObjects(objects);
+			//if (intersects.length > 0) {
+			//	if (INTERSECTED != intersects[0].object) {
+			//		if (INTERSECTED) INTERSECTED.material.color.setHex(INTERSECTED.currentHex);
+			//		INTERSECTED = intersects[0].object;
+			//		INTERSECTED.currentHex = INTERSECTED.material.color.getHex();
+			//		INTERSECTED.material.color.setHex('0x' + '00000'+(Math.random()*(1<<24)|0).toString(16)).slice(-6);
+			//		console.log(intersects.length);
+			//	}
 
-			if (intersects.length > 0) {
+				if (intersects.length > 0) {
 
 
-				color = '0x' + '009dff' + (Math.random() * (1 << 24) | 0).toString(16).slice(-6);
-				for (var i = 0; i < objects.length; i++) {
-					object = objects[i];
-					object.material.color.setHex(color);
-				}
-				console.log(intersects.length);
+    color = '0x' + '009dff'+(Math.random()*(1<<24)|0).toString(16).slice(-6);
+    for (var i = 0; i < objects.length; i++) {
+        object = objects[i];
+        object.material.color.setHex(color);
+    }
+    console.log(intersects.length);
 
 			} else {
 				if (INTERSECTED) INTERSECTED.material.color.setHex(INTERSECTED.currentHex);
 				INTERSECTED = null;
 			}
+
+  		isUserInteracting = true
+
+  		onPointerDownPointerX = event.pageX;
+  		onPointerDownPointerY = event.pageY;
+
+  		onPointerDownLon = lon;
+  		onPointerDownLat = lat;
 		}
 
-		function onDocumentTouchMove(event) {
-			console.log("TouchMove")
-			event.preventDefault();
-			mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-			mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
 
-		}
+function onDocumentTouchMove( event ) {
+    console.log("TouchMove")
 
-		function onDocumentMouseMove(event) {
-			event.preventDefault();
-			mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-			mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+    if ( event.touches.length == 1 ) {
+      event.preventDefault();
+      lon = ( onPointerDownPointerX - event.touches[0].pageX ) * 0.1 + onPointerDownLon;
+      lat = ( event.touches[0].pageY - onPointerDownPointerY ) * 0.1 + onPointerDownLat;
+    }
+}
 
-		}
+function onDocumentMouseMove( event ) {
 
+    if ( isUserInteracting === true ) {
+      lon = ( onPointerDownPointerX - event.pageX ) * 0.1 + onPointerDownLon;
+      lat = ( event.pageY - onPointerDownPointerY ) * 0.1 + onPointerDownLat;
+    }
+}
 		function onDocumentMouseDown(event) {
 			event.preventDefault();
 			mouse.x = (event.pageX / window.innerWidth) * 2 - 1;
@@ -387,27 +379,36 @@
 
 			// find intersections
 			raycaster.setFromCamera(mouse, camera);
-				var headintersect = raycaster.intersectObject(wevhead);
-				var link1 = 'https://distrokid.com/hyperfollow/wev/gbMx'
-				if (headintersect.length > 0) {
-					window.open(link1);
-					}
-
 			var intersects = raycaster.intersectObjects(objects);
-
-			if (intersects.length > 0) {
-				color = '0x' + '009dff' + (Math.random() * (1 << 24) | 0).toString(16).slice(-6);
-				for (var i = 0; i < objects.length; i++) {
-					object = objects[i];
-					object.material.color.setHex(color);
-				}
-				console.log(intersects.length);
+			//if (intersects.length > 0) {
+			//	if (INTERSECTED != intersects[0].object) {
+			//		if (INTERSECTED) INTERSECTED.material.color.setHex(INTERSECTED.currentHex);
+			//		INTERSECTED = intersects[0].object;
+			//		INTERSECTED.currentHex = INTERSECTED.material.color.getHex();
+			//		INTERSECTED.material.color.setHex('0x' + '00000'+(Math.random()*(1<<24)|0).toString(16)).slice(-6);
+			//		console.log(intersects.length);
+			//	}
+//
+				if (intersects.length > 0) {
+    color = '0x' + '009dff'+(Math.random()*(1<<24)|0).toString(16).slice(-6);
+    for (var i = 0; i < objects.length; i++) {
+        object = objects[i];
+        object.material.color.setHex(color);
+    }
+    console.log(intersects.length);
 
 			} else {
 				if (INTERSECTED) INTERSECTED.material.color.setHex(INTERSECTED.currentHex);
 				INTERSECTED = null;
 			}
 
+  		isUserInteracting = true
+
+  		onPointerDownPointerX = event.pageX;
+  		onPointerDownPointerY = event.pageY;
+
+  		onPointerDownLon = lon;
+  		onPointerDownLat = lat;
 		}
 
 		function animate() {
@@ -425,13 +426,18 @@
 		}
 
 		function render() {
-			var timer = Date.now() * 0.0005;
-			//boxesGroup.rotation.y += -0.001;
+							var timer = Date.now() * 0.0005;
+							//boxesGroup.rotation.y += -0.001;
 
-			for (var i = 0; i < objects.length; i++) {
-				object = objects[i];
-				object.rotation.y += -0.005;
-			}
+							for (var i = 0; i < objects.length; i++) {
+					        object = objects[i];
+					        object.rotation.y += -0.005;
+								}
+
+								wevhead.lookAt(camera.position);
+								stream.lookAt(camera.position);
+
+
 
 			renderer.render(scene, camera);
 		};
