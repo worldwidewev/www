@@ -326,11 +326,7 @@
 			// find intersections
 			raycaster.setFromCamera(mouse, camera);
 
-			var headintersect = raycaster.intersectObject(wevhead);
-			var link1 = 'https://distrokid.com/hyperfollow/wev/gbMx'
-			if (headintersect.length > 0) {
-				window.open(link1);
-				}
+
 
 			var intersects = raycaster.intersectObjects(objects);
 			//if (intersects.length > 0) {
@@ -356,6 +352,12 @@
 				if (INTERSECTED) INTERSECTED.material.color.setHex(INTERSECTED.currentHex);
 				INTERSECTED = null;
 			}
+
+			var headintersect = raycaster.intersectObject(wevhead);
+			var link1 = 'https://distrokid.com/hyperfollow/wev/gbMx'
+			if (headintersect.length > 0) {
+				window.open(link1);
+				}
 
 			isUserInteracting = true
 
