@@ -308,7 +308,7 @@
 			stream = new THREE.Mesh(geometry, material);
 
 			document.addEventListener('mousedown', onDocumentMouseDown, false);
-			document.addEventListener('touchstart', onDocumentMouseDown, false);
+			document.addEventListener('touchstart', onDocumentMouseDown, true);
 			//document.addEventListener('mousedown touchstart', onDocumentMouseDown, false)
 			window.addEventListener('resize', onWindowResize, false);
 		}
