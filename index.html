@@ -289,7 +289,7 @@
 			}
 			wevhead = new THREE.Mesh(geometry, material);
 
-			window.addEventListener('touchstart', function(){
+			geometry.addEventListener('touchstart', function(){
 							event.preventDefault();
 				raycaster.setFromCamera(mouse, camera);
 
@@ -301,17 +301,19 @@
 //
 			});
 
-			//wevhead.addEventListener('mousedown', function(){
-			//				event.preventDefault();
-			//	raycaster.setFromCamera(mouse, camera);
-      //
-			//	var headintersect = raycaster.intersectObject(wevhead);
-			//	var link1 = 'https://distrokid.com/hyperfollow/wev/gbMx'
-			//	if (headintersect.length > 0) {
-			//		window.open(link1);
-			//	}
-      //
-			//});
+			geometry.addEventListener('mousedown', function(){
+							event.preventDefault();
+				raycaster.setFromCamera(mouse, camera);
+
+				var headintersect = raycaster.intersectObject(wevhead);
+				var link1 = 'https://distrokid.com/hyperfollow/wev/gbMx'
+				if (headintersect.length > 0) {
+					window.open(link1);
+				}
+//
+			});
+
+
 				// find intersections
 
 			loader.load('models/lookup.json', handle_load2);
