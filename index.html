@@ -37,7 +37,7 @@
 	<script src="js/Projector.js"></script>
 	<script src="js/3Dink.js"></script>
 	<script src="js/stats.min.js"></script>
-	<script src="js/Tween.js"></script>
+	<script src="js/hammer.min.js"></script>
 
 	<script>
 		var container, stats, clock, mixer;
@@ -221,6 +221,8 @@
 
 
 
+
+
 			stats = new Stats();
 			container.appendChild(stats.dom);
 
@@ -238,6 +240,12 @@
 
 			if (window.mobilecheck() == true) {
 				controls = new THREE.DeviceOrientationControls(camera, THREE.WebGLRenderer);
+				dragControls.addEventListener('touchstart', function() {
+					dragControls.enabled = false;
+				});
+				dragControls.addEventListener('touchend', function() {
+					dragControls.enabled = true;
+				});
 			} else {
 				controls = new THREE.OrbitControls(camera, renderer.domElement);
 				controls.minPolarAngle = Math.PI / 2 - 0.2;
@@ -281,6 +289,8 @@
 			}
 			wevhead = new THREE.Mesh(geometry, material);
 
+				// find intersections
+
 			loader.load('models/lookup.json', handle_load2);
 
 			function handle_load2(geometry, materials) {
@@ -312,8 +322,8 @@
 			}
 			stream = new THREE.Mesh(geometry, material);
 
-			document.addEventListener('mousedown', onDocumentMouseDown, false);
-			document.addEventListener('touchstart', onDocumentMouseDown, false);
+			//document.addEventListener('mousedown', onDocumentMouseDown, false);
+			//document.addEventListener('touchstart', onDocumentMouseDown, false);
 			window.addEventListener('resize', onWindowResize, false);
 		}
 		//end of init function
@@ -323,7 +333,7 @@
 			renderer.setSize(window.innerWidth, window.innerHeight);
 		}
 
-		function onTouchStart(event) {
+		function onDocumentTouchStart(event) {
 			event.preventDefault();
 			mouse.x = (event.pageX / window.innerWidth) * 2 - 1;
 			mouse.y = -(event.pageY / window.innerHeight) * 2 + 1;
@@ -353,16 +363,7 @@
 				if (INTERSECTED) INTERSECTED.material.color.setHex(INTERSECTED.currentHex);
 				INTERSECTED = null;
 			}
-
-			//isUserInteracting = true
-
-			//onPointerDownPointerX = event.pageX;
-			//onPointerDownPointerY = event.pageY;
-
-			//onPointerDownLon = lon;
-			//onPointerDownLat = lat;
 		}
-
 
 		function onDocumentTouchMove(event) {
 			console.log("TouchMove")
@@ -370,11 +371,6 @@
 			mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
 			mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
 
-			//if (event.touches.length == 1) {
-			//	event.preventDefault();
-			//	lon = (onPointerDownPointerX - event.touches[0].pageX) * 0.1 + onPointerDownLon;
-			//	lat = (event.touches[0].pageY - onPointerDownPointerY) * 0.1 + onPointerDownLat;
-			//}
 		}
 
 		function onDocumentMouseMove(event) {
@@ -382,10 +378,6 @@
 			mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
 			mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
 
-			//if (isUserInteracting === true) {
-			//	lon = (onPointerDownPointerX - event.pageX) * 0.1 + onPointerDownLon;
-			//	lat = (event.pageY - onPointerDownPointerY) * 0.1 + onPointerDownLat;
-			//}
 		}
 
 		function onDocumentMouseDown(event) {
@@ -395,12 +387,11 @@
 
 			// find intersections
 			raycaster.setFromCamera(mouse, camera);
-
-			var headintersect = raycaster.intersectObject(wevhead);
-			var link1 = 'https://distrokid.com/hyperfollow/wev/gbMx'
-			if (headintersect.length > 0) {
-				window.open(link1);
-			}
+				var headintersect = raycaster.intersectObject(wevhead);
+				var link1 = 'https://distrokid.com/hyperfollow/wev/gbMx'
+				if (headintersect.length > 0) {
+					window.open(link1);
+					}
 
 			var intersects = raycaster.intersectObjects(objects);
 
@@ -417,13 +408,6 @@
 				INTERSECTED = null;
 			}
 
-			//isUserInteracting = true
-
-			//onPointerDownPointerX = event.pageX;
-			//onPointerDownPointerY = event.pageY;
-
-			//onPointerDownLon = lon;
-			//onPointerDownLat = lat;
 		}
 
 		function animate() {
