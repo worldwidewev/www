@@ -11,7 +11,7 @@
             background-color: #00000;
             margin: 0px;
             overflow: hidden;
-            touch-action: none;
+            /* touch-action: none; */
         }
         
         #info {
@@ -308,8 +308,12 @@
             }
             stream = new THREE.Mesh(geometry, material);
 
-            document.addEventListener('mousedown', onDocumentMouseDown, false);
-            document.addEventListener('touchstart', onDocumentMouseDown, true);
+            document.addEventListener('mousedown', onDocumentMouseDown, {
+                passive: false
+            });
+            document.addEventListener('touchstart', onDocumentMouseDown, {
+                passive: false
+            });
             //document.addEventListener('mousedown touchstart', onDocumentMouseDown, false)
             window.addEventListener('resize', onWindowResize, false);
         }
