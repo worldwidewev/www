@@ -324,7 +324,7 @@
 			mouse.y = -(event.pageY / window.innerHeight) * 2 + 1;
 
 			// find intersections
-			raycaster.setFromCamera(touch, camera);
+			raycaster.setFromCamera(mouse, camera);
 
 
 
@@ -358,6 +358,8 @@
 			if (headintersect.length > 0) {
 				window.open(link1);
 				}
+
+				event.stopPropagation();
 
 			isUserInteracting = true
 
