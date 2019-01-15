@@ -275,12 +275,6 @@
 				//controls.enableZoom = false;
 			};
 
-
-			scene.addEventListener('touchstart', function() {
-
-				raycaster.setFromCamera(mouse, camera);
-
-
 			loader.load('models/lookup.json', handle_load2);
 
 			function handle_load2(geometry, materials) {
@@ -331,12 +325,12 @@
 
 			// find intersections
 			raycaster.setFromCamera(mouse, camera);
+
 			var headintersect = raycaster.intersectObject(wevhead);
 			var link1 = 'https://distrokid.com/hyperfollow/wev/gbMx'
 			if (headintersect.length > 0) {
 				window.open(link1);
 				}
-		});
 
 			var intersects = raycaster.intersectObjects(objects);
 			//if (intersects.length > 0) {
