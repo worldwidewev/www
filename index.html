@@ -2,467 +2,467 @@
 <html lang="en">
 
 <head>
-	<title>www</title>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-	<style>
-		body {
-			font-family: Monospace;
-			background-color: #00000;
-			margin: 0px;
-			overflow: hidden;
-		}
-
-		#info {
-			position: absolute;
-			top: 0px;
-			width: 100%;
-			padding: 5px;
-			font-family: Monospace;
-			font-size: 13px;
-			text-align: center;
-		}
-	</style>
+    <title>www</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <style>
+        body {
+            font-family: Monospace;
+            background-color: #00000;
+            margin: 0px;
+            overflow: hidden;
+        }
+        
+        #info {
+            position: absolute;
+            top: 0px;
+            width: 100%;
+            padding: 5px;
+            font-family: Monospace;
+            font-size: 13px;
+            text-align: center;
+        }
+    </style>
 </head>
 
 <body>
 
-	<div id="container"></div>
-	<script src="js/three.js"></script>
-	<script src="js/OrbitControls.js"></script>
-	<script src="js/DeviceOrientationControls.js"></script>
-	<script src="js/Reflector.js"></script>
-	<script src="js/DragControls.js"></script>
-	<script src="js/TrackballControls.js"></script>
-	<script src="js/Projector.js"></script>
-	<script src="js/3Dink.js"></script>
-	<script src="js/stats.min.js"></script>
-	<script src="js/Tween.js"></script>
-
-	<script>
-		var container, stats, clock, mixer;
-		var renderer, scene, camera, group, raycaster, stats, controls;
-		var WIDTH = window.innerWidth;
-		var HEIGHT = window.innerHeight;
-		var objects = [];
-		var mouse = new THREE.Vector2(),
-			INTERSECTED;
-
-		var boxesGroup = new THREE.Group();
-		var tween;
-
-		init();
-		animate();
-
-		function init() {
-			container = document.getElementById('container');
-			scene = new THREE.Scene();
-			scene.background = new THREE.Color(0x0f0f0f);
-
-			var group = new THREE.Group();
-			scene.add(group);
-
-			camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 300, 8000);
-			//camera.position.set(0, 250, 1000);
-			camera.position.y = 5;
-			camera.position.z = 500;
-
-			scene.add(camera);
-			scene.add(new THREE.AmbientLight(0xf0f0f0));
-
-
-
-						var geometry = new THREE.BufferGeometry();
-						var loader = new THREE.JSONLoader();
-						var material = new THREE.ShaderMaterial();
-
-						//wevhead
-						loader.load('models/wevhead.json', handle_load1);
-
-						function handle_load1(geometry, materials) {
-							var material = new THREE.MultiMaterial(materials);
-							material.morphTargets = true;
-
-							wevhead = new THREE.Mesh(geometry, material);
-							scene.add(wevhead);
-
-							DDDINK.addURL(wevhead, "https://distrokid.com/hyperfollow/wev/gbMx");
-							DDDINK.domEvent.setGlobalLinkConfig('_self', 'ON', 'ON', 0xffffff);
-							DDDINK.readRendererObj(renderer, scene, camera);
-							DDDINK.domEvent.addFnc('Fn', 'A');
-
-							//wevhead.rotation.y = 3.14;
-							wevhead.position.y = -10;
-							wevhead.position.z = -8;
-							wevhead.scale.set(3, 3, 3);
-
-							//wevhead.rotation.x = 0.4;
-						}
-						wevhead = new THREE.Mesh(geometry, material);
-			//light
-			var light = new THREE.SpotLight(0xffffff, 0.5);
-			light.position.set(0, 1500, 200);
-			light.castShadow = false;
-			light.shadow = new THREE.LightShadow(new THREE.PerspectiveCamera(70, 1, 200, 2000));
-			light.shadow.bias = -0.000222;
-			light.shadow.mapSize.width = 1024;
-			light.shadow.mapSize.height = 1024;
-			scene.add(light);
-
-			//grid
-			var planeGeometry = new THREE.PlaneBufferGeometry(2000, 2000);
-			planeGeometry.rotateX(-Math.PI / 2);
-			var planeMaterial = new THREE.ShadowMaterial({
-				opacity: 1
-			});
-			var plane = new THREE.Mesh(planeGeometry, planeMaterial);
-			plane.position.y = -200;
-			plane.receiveShadow = true;
-			scene.add(plane);
-
-
-			var helper = new THREE.GridHelper(2000, 100);
-			helper.position.y = -500;
-			//helper.position.z = -200;
-			helper.material.opacity = 1;
-			helper.material.transparent = false;
-			scene.add(helper);
-
+    <div id="container"></div>
+    <script src="js/three.js"></script>
+    <script src="js/OrbitControls.js"></script>
+    <script src="js/DeviceOrientationControls.js"></script>
+    <script src="js/Reflector.js"></script>
+    <script src="js/DragControls.js"></script>
+    <script src="js/TrackballControls.js"></script>
+    <script src="js/Projector.js"></script>
+    <script src="js/3Dink.js"></script>
+    <script src="js/stats.min.js"></script>
+    <script src="js/Tween.js"></script>
+
+    <script>
+        var container, stats, clock, mixer;
+        var renderer, scene, camera, group, raycaster, stats, controls;
+        var WIDTH = window.innerWidth;
+        var HEIGHT = window.innerHeight;
+        var objects = [];
+        var mouse = new THREE.Vector2(),
+            INTERSECTED;
+
+        var boxesGroup = new THREE.Group();
+        var tween;
+
+        init();
+        animate();
+
+        function init() {
+            container = document.getElementById('container');
+            scene = new THREE.Scene();
+            scene.background = new THREE.Color(0x0f0f0f);
+
+            var group = new THREE.Group();
+            scene.add(group);
+
+            camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 300, 8000);
+            //camera.position.set(0, 250, 1000);
+            camera.position.y = 5;
+            camera.position.z = 500;
+
+            scene.add(camera);
+            scene.add(new THREE.AmbientLight(0xf0f0f0));
+
+
+
+            var geometry = new THREE.BufferGeometry();
+            var loader = new THREE.JSONLoader();
+            var material = new THREE.ShaderMaterial();
+
+            //wevhead
+            loader.load('models/wevhead.json', handle_load1);
+
+            function handle_load1(geometry, materials) {
+                var material = new THREE.MultiMaterial(materials);
+                material.morphTargets = true;
+
+                wevhead = new THREE.Mesh(geometry, material);
+                scene.add(wevhead);
+
+                DDDINK.addURL(wevhead, "https://distrokid.com/hyperfollow/wev/gbMx");
+                DDDINK.domEvent.setGlobalLinkConfig('_self', 'ON', 'ON', 0xffffff);
+                DDDINK.readRendererObj(renderer, scene, camera);
+                DDDINK.domEvent.addFnc('Fn', 'A');
+
+                //wevhead.rotation.y = 3.14;
+                wevhead.position.y = -10;
+                wevhead.position.z = -8;
+                wevhead.scale.set(3, 3, 3);
+
+                //wevhead.rotation.x = 0.4;
+            }
+            wevhead = new THREE.Mesh(geometry, material);
+            //light
+            var light = new THREE.SpotLight(0xffffff, 0.5);
+            light.position.set(0, 1500, 200);
+            light.castShadow = false;
+            light.shadow = new THREE.LightShadow(new THREE.PerspectiveCamera(70, 1, 200, 2000));
+            light.shadow.bias = -0.000222;
+            light.shadow.mapSize.width = 1024;
+            light.shadow.mapSize.height = 1024;
+            scene.add(light);
+
+            //grid
+            var planeGeometry = new THREE.PlaneBufferGeometry(2000, 2000);
+            planeGeometry.rotateX(-Math.PI / 2);
+            var planeMaterial = new THREE.ShadowMaterial({
+                opacity: 1
+            });
+            var plane = new THREE.Mesh(planeGeometry, planeMaterial);
+            plane.position.y = -200;
+            plane.receiveShadow = true;
+            scene.add(plane);
+
+
+            var helper = new THREE.GridHelper(2000, 100);
+            helper.position.y = -500;
+            //helper.position.z = -200;
+            helper.material.opacity = 1;
+            helper.material.transparent = false;
+            scene.add(helper);
+
 
-			//mirrors
-
-
-			//front mirror
-			var geometry = new THREE.PlaneBufferGeometry(2000, 2000);
-			var verticalMirror1 = new THREE.Reflector(geometry, {
-				clipBias: 0.5,
-				textureWidth: WIDTH * window.devicePixelRatio,
-				textureHeight: HEIGHT * window.devicePixelRatio,
-				color: 0x889999,
-				recursion: 0.5
-			});
-
-			verticalMirror1.opacity = 0.5;
-			verticalMirror1.position.y = 500;
-			verticalMirror1.position.z = 1200;
-			verticalMirror1.rotation.y = 3.14;
-			scene.add(verticalMirror1);
-
-			//back mirror
-			var geometry = new THREE.PlaneBufferGeometry(2000, 2000);
-			var verticalMirror2 = new THREE.Reflector(geometry, {
-				clipBias: 0.5,
-				textureWidth: WIDTH * window.devicePixelRatio,
-				textureHeight: HEIGHT * window.devicePixelRatio,
-				color: 0x889999,
-				recursion: 0.5
-			});
-
-			verticalMirror2.opacity = 0.5;
-			verticalMirror2.position.y = 500;
-			verticalMirror2.position.z = -1200;
-			//verticalMirror2.rotation.y = -3.14;
-			scene.add(verticalMirror2);
-
-			//right mirror
-			var geometry = new THREE.PlaneBufferGeometry(2000, 2000);
-			var verticalMirror3 = new THREE.Reflector(geometry, {
-				clipBias: 0.5,
-				textureWidth: WIDTH * window.devicePixelRatio,
-				textureHeight: HEIGHT * window.devicePixelRatio,
-				color: 0x889999,
-				recursion: 0.5
-			});
-
-			verticalMirror3.opacity = 0.5;
-			verticalMirror3.position.y = 500;
-			verticalMirror3.position.x = -1200;
-			verticalMirror3.rotation.y = 1.5708;
-			scene.add(verticalMirror3);
-
-			//left mirror
-			var geometry = new THREE.PlaneBufferGeometry(2000, 2000);
-			var verticalMirror4 = new THREE.Reflector(geometry, {
-				clipBias: 0.5,
-				textureWidth: WIDTH * window.devicePixelRatio,
-				textureHeight: HEIGHT * window.devicePixelRatio,
-				color: 0x889999,
-				recursion: 0.5
-			});
-
-			verticalMirror4.opacity = 0.5;
-			verticalMirror4.position.y = 500;
-			verticalMirror4.position.x = 1200;
-			verticalMirror4.rotation.y = -1.5708;
-			scene.add(verticalMirror4);
-
-			raycaster = new THREE.Raycaster();
-
-
-			var boxGeometry = new THREE.BoxBufferGeometry(50, 50, 50);
-			for (var i = 0; i < 20; i++) {
-
-				var object = new THREE.Mesh(boxGeometry, new THREE.MeshPhongMaterial({
-					color: 0x009dff
-				}));
-
-				object.position.x = Math.random() * 1500 - 700;
-				object.position.y = Math.random() * 1000 - 700;
-				object.position.z = Math.random() * 1500 - 500;
-				object.rotation.x = Math.random() * 2 * Math.PI;
-				object.rotation.y = Math.random() * 2 * Math.PI;
-				object.rotation.z = Math.random() * 2 * Math.PI;
-				object.scale.x = Math.random() * 2 + 1;
-				object.scale.y = Math.random() * 2 + 1;
-				object.scale.z = Math.random() * 2 + 1;
-				object.castShadow = true;
-				object.receiveShadow = true;
-
-				//scene.add(object);
-				objects.push(object);
-				boxesGroup.add(object);
-
-			}
-
-			scene.add(boxesGroup);
-			boxesGroup.position.z = -200
-
-
-
-			renderer = new THREE.WebGLRenderer({
-				antialias: true
-			});
-			renderer.setPixelRatio(window.devicePixelRatio);
-			renderer.setSize(window.innerWidth, window.innerHeight);
-			renderer.shadowMap.enabled = true;
-			container.appendChild(renderer.domElement);
-
-
-			var dragControls = new THREE.DragControls(objects, camera, renderer.domElement);
-
-
-
-			stats = new Stats();
-			container.appendChild(stats.dom);
-
-			window.mobilecheck = function() {
-				var check = false;
-				(function(a) {
-					if (
-						/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|mobile.+firefox|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows ce|xda|xiino/i
-						.test(a) ||
-						/1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i
-						.test(a.substr(0, 4))) check = true;
-				})(navigator.userAgent || navigator.vendor || window.opera);
-				return check;
-			};
-
-			if (window.mobilecheck() == true) {
-				controls = new THREE.DeviceOrientationControls(camera, THREE.WebGLRenderer);
-
-			} else {
-				controls = new THREE.OrbitControls(camera, renderer.domElement);
-				controls.minPolarAngle = Math.PI / 2 - 0.2;
-				controls.maxPolarAngle = Math.PI / 2 + 0.2;
-
-				dragControls.addEventListener('dragstart', function() {
-					controls.enabled = false;
-				});
-				dragControls.addEventListener('dragend', function() {
-					controls.enabled = true;
-				});
-
-				//controls.enablePan = false;
-				//controls.enableZoom = false;
-			};
-
-			loader.load('models/lookup.json', handle_load2);
-
-			function handle_load2(geometry, materials) {
-				var material = new THREE.MultiMaterial(materials);
-				material.morphTargets = true;
-
-				lookup = new THREE.Mesh(geometry, material);
-				scene.add(lookup);
-
-
-				lookup.position.y = -300;
-				lookup.position.z = 300;
-				lookup.scale.set(12, 12, 12);
-			}
-
-			loader.load('models/stream.json', handle_load3);
-
-			function handle_load3(geometry, materials) {
-				var material = new THREE.MultiMaterial(materials);
-				material.morphTargets = true;
-
-				stream = new THREE.Mesh(geometry, material);
-				scene.add(stream);
-
-
-				stream.position.y = 70;
-				stream.position.z = -8;
-				stream.scale.set(10, 10, 10);
-			}
-			stream = new THREE.Mesh(geometry, material);
-
-			document.addEventListener('mousedown', onDocumentMouseDown, false);
-			document.addEventListener('touchstart', onDocumentMouseDown, true);
-			//document.addEventListener('mousedown touchstart', onDocumentMouseDown, false)
-			window.addEventListener('resize', onWindowResize, false);
-		}
-		//end of init function
-		function onWindowResize() {
-			camera.aspect = window.innerWidth / window.innerHeight;
-			camera.updateProjectionMatrix();
-			renderer.setSize(window.innerWidth, window.innerHeight);
-		}
-
-		function onTouchStart(event) {
-			//event.preventDefault();
-			mouse.x = (event.pageX / window.innerWidth) * 2 - 1;
-			mouse.y = -(event.pageY / window.innerHeight) * 2 + 1;
-			       console.log("event start")
-
-			// find intersections
-			raycaster.setFromCamera(mouse, camera);
-
-
-
-			var intersects = raycaster.intersectObjects(objects);
-			//if (intersects.length > 0) {
-			//	if (INTERSECTED != intersects[0].object) {
-			//		if (INTERSECTED) INTERSECTED.material.color.setHex(INTERSECTED.currentHex);
-			//		INTERSECTED = intersects[0].object;
-			//		INTERSECTED.currentHex = INTERSECTED.material.color.getHex();
-			//		INTERSECTED.material.color.setHex('0x' + '00000'+(Math.random()*(1<<24)|0).toString(16)).slice(-6);
-			//		console.log(intersects.length);
-			//	}
-
-			if (intersects.length > 0) {
-
-
-				color = '0x' + '009dff' + (Math.random() * (1 << 24) | 0).toString(16).slice(-6);
-				for (var i = 0; i < objects.length; i++) {
-					object = objects[i];
-					object.material.color.setHex(color);
-				}
-				console.log(intersects.length);
-
-			} else {
-				if (INTERSECTED) INTERSECTED.material.color.setHex(INTERSECTED.currentHex);
-				INTERSECTED = null;
-			}
-
-
-			//isUserInteracting = true
-
-			//onPointerDownPointerX = event.pageX;
-			//onPointerDownPointerY = event.pageY;
-
-			//onPointerDownLon = lon;
-			//onPointerDownLat = lat;
-		}
-
-
-		function onDocumentTouchMove(event) {
-			console.log("TouchMove")
-
-			if (event.touches.length == 1) {
-				event.preventDefault();
-				lon = (onPointerDownPointerX - event.touches[0].pageX) * 0.1 + onPointerDownLon;
-				lat = (event.touches[0].pageY - onPointerDownPointerY) * 0.1 + onPointerDownLat;
-			}
-		}
-
-		function onDocumentMouseMove(event) {
-
-			if (isUserInteracting === true) {
-				lon = (onPointerDownPointerX - event.pageX) * 0.1 + onPointerDownLon;
-				lat = (event.pageY - onPointerDownPointerY) * 0.1 + onPointerDownLat;
-			}
-		}
-
-		function onDocumentMouseDown(event) {
-			event.preventDefault();
-			mouse.x = (event.pageX / window.innerWidth) * 2 - 1;
-			mouse.y = -(event.pageY / window.innerHeight) * 2 + 1;
-
-			// find intersections
-			raycaster.setFromCamera(mouse, camera);
-
-			var headintersect = raycaster.intersectObject(wevhead);
-			var link1 = 'https://distrokid.com/hyperfollow/wev/gbMx'
-			if (headintersect.length > 0) {
-				window.open(link1);
-				}
-
-			var intersects = raycaster.intersectObjects(objects);
-			//if (intersects.length > 0) {
-			//	if (INTERSECTED != intersects[0].object) {
-			//		if (INTERSECTED) INTERSECTED.material.color.setHex(INTERSECTED.currentHex);
-			//		INTERSECTED = intersects[0].object;
-			//		INTERSECTED.currentHex = INTERSECTED.material.color.getHex();
-			//		INTERSECTED.material.color.setHex('0x' + '00000'+(Math.random()*(1<<24)|0).toString(16)).slice(-6);
-			//		console.log(intersects.length);
-			//	}
-
-			if (intersects.length > 0) {
-				color = '0x' + '009dff' + (Math.random() * (1 << 24) | 0).toString(16).slice(-6);
-				for (var i = 0; i < objects.length; i++) {
-					object = objects[i];
-					object.material.color.setHex(color);
-				}
-				console.log(intersects.length);
-
-			} else {
-				if (INTERSECTED) INTERSECTED.material.color.setHex(INTERSECTED.currentHex);
-				INTERSECTED = null;
-			}
-
-			//isUserInteracting = true
-			//lon = (onPointerDownPointerX - event.pageX) * 0.1 + onPointerDownLon;
-			//lat = (event.pageY - onPointerDownPointerY) * 0.1 + onPointerDownLat;
-
-			//onPointerDownPointerX = event.pageX;
-			//onPointerDownPointerY = event.pageY;
-
-			//onPointerDownLon = lon;
-			//onPointerDownLat = lat;
-		}
-
-		function animate() {
-			requestAnimationFrame(animate);
-			controls.update();
-			render();
-			stats.update();
-		}
-
-		var prevTime = Date.now();
-		if (mixer) {
-			var time = Date.now();
-			mixer.update((time - prevTime) * 0.001);
-			prevTime = time;
-		}
-
-		function render() {
-			var timer = Date.now() * 0.0005;
-			//boxesGroup.rotation.y += -0.001;
-
-			for (var i = 0; i < objects.length; i++) {
-				object = objects[i];
-				object.rotation.y += -0.005;
-			}
-
-			//wevhead.lookAt(camera.position);
-			//stream.lookAt(camera.position);
-
-
-
-			renderer.render(scene, camera);
-		};
-	</script>
+            //mirrors
+
+
+            //front mirror
+            var geometry = new THREE.PlaneBufferGeometry(2000, 2000);
+            var verticalMirror1 = new THREE.Reflector(geometry, {
+                clipBias: 0.5,
+                textureWidth: WIDTH * window.devicePixelRatio,
+                textureHeight: HEIGHT * window.devicePixelRatio,
+                color: 0x889999,
+                recursion: 0.5
+            });
+
+            verticalMirror1.opacity = 0.5;
+            verticalMirror1.position.y = 500;
+            verticalMirror1.position.z = 1200;
+            verticalMirror1.rotation.y = 3.14;
+            scene.add(verticalMirror1);
+
+            //back mirror
+            var geometry = new THREE.PlaneBufferGeometry(2000, 2000);
+            var verticalMirror2 = new THREE.Reflector(geometry, {
+                clipBias: 0.5,
+                textureWidth: WIDTH * window.devicePixelRatio,
+                textureHeight: HEIGHT * window.devicePixelRatio,
+                color: 0x889999,
+                recursion: 0.5
+            });
+
+            verticalMirror2.opacity = 0.5;
+            verticalMirror2.position.y = 500;
+            verticalMirror2.position.z = -1200;
+            //verticalMirror2.rotation.y = -3.14;
+            scene.add(verticalMirror2);
+
+            //right mirror
+            var geometry = new THREE.PlaneBufferGeometry(2000, 2000);
+            var verticalMirror3 = new THREE.Reflector(geometry, {
+                clipBias: 0.5,
+                textureWidth: WIDTH * window.devicePixelRatio,
+                textureHeight: HEIGHT * window.devicePixelRatio,
+                color: 0x889999,
+                recursion: 0.5
+            });
+
+            verticalMirror3.opacity = 0.5;
+            verticalMirror3.position.y = 500;
+            verticalMirror3.position.x = -1200;
+            verticalMirror3.rotation.y = 1.5708;
+            scene.add(verticalMirror3);
+
+            //left mirror
+            var geometry = new THREE.PlaneBufferGeometry(2000, 2000);
+            var verticalMirror4 = new THREE.Reflector(geometry, {
+                clipBias: 0.5,
+                textureWidth: WIDTH * window.devicePixelRatio,
+                textureHeight: HEIGHT * window.devicePixelRatio,
+                color: 0x889999,
+                recursion: 0.5
+            });
+
+            verticalMirror4.opacity = 0.5;
+            verticalMirror4.position.y = 500;
+            verticalMirror4.position.x = 1200;
+            verticalMirror4.rotation.y = -1.5708;
+            scene.add(verticalMirror4);
+
+            raycaster = new THREE.Raycaster();
+
+
+            var boxGeometry = new THREE.BoxBufferGeometry(50, 50, 50);
+            for (var i = 0; i < 20; i++) {
+
+                var object = new THREE.Mesh(boxGeometry, new THREE.MeshPhongMaterial({
+                    color: 0x009dff
+                }));
+
+                object.position.x = Math.random() * 1500 - 700;
+                object.position.y = Math.random() * 1000 - 700;
+                object.position.z = Math.random() * 1500 - 500;
+                object.rotation.x = Math.random() * 2 * Math.PI;
+                object.rotation.y = Math.random() * 2 * Math.PI;
+                object.rotation.z = Math.random() * 2 * Math.PI;
+                object.scale.x = Math.random() * 2 + 1;
+                object.scale.y = Math.random() * 2 + 1;
+                object.scale.z = Math.random() * 2 + 1;
+                object.castShadow = true;
+                object.receiveShadow = true;
+
+                //scene.add(object);
+                objects.push(object);
+                boxesGroup.add(object);
+
+            }
+
+            scene.add(boxesGroup);
+            boxesGroup.position.z = -200
+
+
+
+            renderer = new THREE.WebGLRenderer({
+                antialias: true
+            });
+            renderer.setPixelRatio(window.devicePixelRatio);
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.shadowMap.enabled = true;
+            container.appendChild(renderer.domElement);
+
+
+            var dragControls = new THREE.DragControls(objects, camera, renderer.domElement);
+
+
+
+            stats = new Stats();
+            container.appendChild(stats.dom);
+
+            window.mobilecheck = function() {
+                var check = false;
+                (function(a) {
+                    if (
+                        /(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|mobile.+firefox|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows ce|xda|xiino/i
+                        .test(a) ||
+                        /1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i
+                        .test(a.substr(0, 4))) check = true;
+                })(navigator.userAgent || navigator.vendor || window.opera);
+                return check;
+            };
+
+            if (window.mobilecheck() == true) {
+                console.log("Mobile device found");
+                controls = new THREE.DeviceOrientationControls(camera, THREE.WebGLRenderer);
+            } else {
+                controls = new THREE.OrbitControls(camera, renderer.domElement);
+                controls.minPolarAngle = Math.PI / 2 - 0.2;
+                controls.maxPolarAngle = Math.PI / 2 + 0.2;
+
+                dragControls.addEventListener('dragstart', function() {
+                    controls.enabled = false;
+                });
+                dragControls.addEventListener('dragend', function() {
+                    controls.enabled = true;
+                });
+
+                //controls.enablePan = false;
+                //controls.enableZoom = false;
+            };
+
+            loader.load('models/lookup.json', handle_load2);
+
+            function handle_load2(geometry, materials) {
+                var material = new THREE.MultiMaterial(materials);
+                material.morphTargets = true;
+
+                lookup = new THREE.Mesh(geometry, material);
+                scene.add(lookup);
+
+
+                lookup.position.y = -300;
+                lookup.position.z = 300;
+                lookup.scale.set(12, 12, 12);
+            }
+
+            loader.load('models/stream.json', handle_load3);
+
+            function handle_load3(geometry, materials) {
+                var material = new THREE.MultiMaterial(materials);
+                material.morphTargets = true;
+
+                stream = new THREE.Mesh(geometry, material);
+                scene.add(stream);
+
+
+                stream.position.y = 70;
+                stream.position.z = -8;
+                stream.scale.set(10, 10, 10);
+            }
+            stream = new THREE.Mesh(geometry, material);
+
+            document.addEventListener('mousedown', onDocumentMouseDown, false);
+            document.addEventListener('touchstart', onDocumentMouseDown, true);
+            //document.addEventListener('mousedown touchstart', onDocumentMouseDown, false)
+            window.addEventListener('resize', onWindowResize, false);
+        }
+        //end of init function
+        function onWindowResize() {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        }
+
+        function onTouchStart(event) {
+            //event.preventDefault();
+            mouse.x = (event.pageX / window.innerWidth) * 2 - 1;
+            mouse.y = -(event.pageY / window.innerHeight) * 2 + 1;
+            console.log("event start")
+
+            // find intersections
+            raycaster.setFromCamera(mouse, camera);
+
+
+
+            var intersects = raycaster.intersectObjects(objects);
+            //if (intersects.length > 0) {
+            //	if (INTERSECTED != intersects[0].object) {
+            //		if (INTERSECTED) INTERSECTED.material.color.setHex(INTERSECTED.currentHex);
+            //		INTERSECTED = intersects[0].object;
+            //		INTERSECTED.currentHex = INTERSECTED.material.color.getHex();
+            //		INTERSECTED.material.color.setHex('0x' + '00000'+(Math.random()*(1<<24)|0).toString(16)).slice(-6);
+            //		console.log(intersects.length);
+            //	}
+
+            if (intersects.length > 0) {
+
+
+                color = '0x' + '009dff' + (Math.random() * (1 << 24) | 0).toString(16).slice(-6);
+                for (var i = 0; i < objects.length; i++) {
+                    object = objects[i];
+                    object.material.color.setHex(color);
+                }
+                console.log(intersects.length);
+
+            } else {
+                if (INTERSECTED) INTERSECTED.material.color.setHex(INTERSECTED.currentHex);
+                INTERSECTED = null;
+            }
+
+
+            //isUserInteracting = true
+
+            //onPointerDownPointerX = event.pageX;
+            //onPointerDownPointerY = event.pageY;
+
+            //onPointerDownLon = lon;
+            //onPointerDownLat = lat;
+        }
+
+
+        function onDocumentTouchMove(event) {
+            console.log("TouchMove")
+
+            if (event.touches.length == 1) {
+                event.preventDefault();
+                lon = (onPointerDownPointerX - event.touches[0].pageX) * 0.1 + onPointerDownLon;
+                lat = (event.touches[0].pageY - onPointerDownPointerY) * 0.1 + onPointerDownLat;
+            }
+        }
+
+        function onDocumentMouseMove(event) {
+
+            if (isUserInteracting === true) {
+                lon = (onPointerDownPointerX - event.pageX) * 0.1 + onPointerDownLon;
+                lat = (event.pageY - onPointerDownPointerY) * 0.1 + onPointerDownLat;
+            }
+        }
+
+        function onDocumentMouseDown(event) {
+            event.preventDefault();
+            mouse.x = (event.pageX / window.innerWidth) * 2 - 1;
+            mouse.y = -(event.pageY / window.innerHeight) * 2 + 1;
+
+            // find intersections
+            raycaster.setFromCamera(mouse, camera);
+
+            var headintersect = raycaster.intersectObject(wevhead);
+            var link1 = 'https://distrokid.com/hyperfollow/wev/gbMx'
+            if (headintersect.length > 0) {
+                window.open(link1);
+            }
+
+            var intersects = raycaster.intersectObjects(objects);
+            //if (intersects.length > 0) {
+            //	if (INTERSECTED != intersects[0].object) {
+            //		if (INTERSECTED) INTERSECTED.material.color.setHex(INTERSECTED.currentHex);
+            //		INTERSECTED = intersects[0].object;
+            //		INTERSECTED.currentHex = INTERSECTED.material.color.getHex();
+            //		INTERSECTED.material.color.setHex('0x' + '00000'+(Math.random()*(1<<24)|0).toString(16)).slice(-6);
+            //		console.log(intersects.length);
+            //	}
+
+            if (intersects.length > 0) {
+                color = '0x' + '009dff' + (Math.random() * (1 << 24) | 0).toString(16).slice(-6);
+                for (var i = 0; i < objects.length; i++) {
+                    object = objects[i];
+                    object.material.color.setHex(color);
+                }
+                console.log(intersects.length);
+
+            } else {
+                if (INTERSECTED) INTERSECTED.material.color.setHex(INTERSECTED.currentHex);
+                INTERSECTED = null;
+            }
+
+            //isUserInteracting = true
+            //lon = (onPointerDownPointerX - event.pageX) * 0.1 + onPointerDownLon;
+            //lat = (event.pageY - onPointerDownPointerY) * 0.1 + onPointerDownLat;
+
+            //onPointerDownPointerX = event.pageX;
+            //onPointerDownPointerY = event.pageY;
+
+            //onPointerDownLon = lon;
+            //onPointerDownLat = lat;
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+            controls.update();
+            render();
+            stats.update();
+        }
+
+        var prevTime = Date.now();
+        if (mixer) {
+            var time = Date.now();
+            mixer.update((time - prevTime) * 0.001);
+            prevTime = time;
+        }
+
+        function render() {
+            var timer = Date.now() * 0.0005;
+            //boxesGroup.rotation.y += -0.001;
+
+            for (var i = 0; i < objects.length; i++) {
+                object = objects[i];
+                object.rotation.y += -0.005;
+            }
+
+            //wevhead.lookAt(camera.position);
+            //stream.lookAt(camera.position);
+
+
+
+            renderer.render(scene, camera);
+        };
+    </script>
 
 </body>
 
