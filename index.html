@@ -86,7 +86,7 @@
 							wevhead = new THREE.Mesh(geometry, material);
 							scene.add(wevhead);
 
-							DDDINK.addURL(wevhead, "https://distrokid.com/hyperfollow/wev/gbMx");
+							//DDDINK.addURL(wevhead, "https://distrokid.com/hyperfollow/wev/gbMx");
 							DDDINK.domEvent.setGlobalLinkConfig('_self', 'ON', 'ON', 0xffffff);
 							DDDINK.readRendererObj(renderer, scene, camera);
 							DDDINK.domEvent.addFnc('Fn', 'A');
@@ -276,7 +276,7 @@
 			};
 
 
-			container.addEventListener('touchstart', function() {
+			scene.addEventListener('touchstart', function() {
 
 				raycaster.setFromCamera(mouse, camera);
 				var headintersect = raycaster.intersectObject(wevhead);
