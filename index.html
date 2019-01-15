@@ -289,12 +289,8 @@
 			}
 			wevhead = new THREE.Mesh(geometry, material);
 
-			function onDocumentTouchStart(event) {
-				event.preventDefault();
-				mouse.x = (event.pageX / window.innerWidth) * 2 - 1;
-				mouse.y = -(event.pageY / window.innerHeight) * 2 + 1;
-
-				// find intersections
+			window.addEventListener('touchstart', function(){
+							event.preventDefault();
 				raycaster.setFromCamera(mouse, camera);
 
 				var headintersect = raycaster.intersectObject(wevhead);
@@ -302,11 +298,21 @@
 				if (headintersect.length > 0) {
 					window.open(link1);
 				}
-			}
+//
+			});
 
-			var mc = new Hammer.Manager(wevhead);
-
-
+			//wevhead.addEventListener('mousedown', function(){
+			//				event.preventDefault();
+			//	raycaster.setFromCamera(mouse, camera);
+      //
+			//	var headintersect = raycaster.intersectObject(wevhead);
+			//	var link1 = 'https://distrokid.com/hyperfollow/wev/gbMx'
+			//	if (headintersect.length > 0) {
+			//		window.open(link1);
+			//	}
+      //
+			//});
+				// find intersections
 
 			loader.load('models/lookup.json', handle_load2);
 
@@ -404,13 +410,6 @@
 
 			// find intersections
 			raycaster.setFromCamera(mouse, camera);
-
-			var headintersect = raycaster.intersectObject(wevhead);
-			var link1 = 'https://distrokid.com/hyperfollow/wev/gbMx'
-			if (headintersect.length > 0) {
-				window.open(link1);
-			}
-
 
 			var intersects = raycaster.intersectObjects(objects);
 
