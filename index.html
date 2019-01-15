@@ -45,7 +45,6 @@
 		var WIDTH = window.innerWidth;
 		var HEIGHT = window.innerHeight;
 		var objects = [];
-		var wevarray = [];
 		var mouse = new THREE.Vector2(),
 			INTERSECTED;
 
@@ -276,7 +275,15 @@
 			}
 			wevhead = new THREE.Mesh(geometry, material);
 
-			wevarray.push(wevhead);
+			container.addEventListener('touchstart', function() {
+
+				raycaster.setFromCamera(mouse, camera);
+				var headintersect = raycaster.intersectObject(wevhead);
+				var link1 = 'https://distrokid.com/hyperfollow/wev/gbMx'
+				if (headintersect.length > 0) {
+					window.open(link1);
+					}
+			});
 
 			loader.load('models/lookup.json', handle_load2);
 
@@ -328,12 +335,6 @@
 
 			// find intersections
 			raycaster.setFromCamera(mouse, camera);
-
-			var headintersect = raycaster.intersectObject(wevarray);
-			var link1 = 'https://distrokid.com/hyperfollow/wev/gbMx'
-			if (headintersect.length > 0) {
-				window.open(link1);
-				}
 
 			var intersects = raycaster.intersectObjects(objects);
 			//if (intersects.length > 0) {
