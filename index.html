@@ -173,7 +173,9 @@
 			var boxGeometry = new THREE.BoxBufferGeometry(50, 50, 50);
 			for (var i = 0; i < 20; i++) {
 
-			var object = new THREE.Mesh(boxGeometry, new THREE.MeshPhongMaterial({color: 0x009dff}));
+				var object = new THREE.Mesh(boxGeometry, new THREE.MeshPhongMaterial({
+					color: 0x009dff
+				}));
 
 				object.position.x = Math.random() * 1500 - 700;
 				object.position.y = Math.random() * 1000 - 700;
@@ -313,7 +315,7 @@
 			renderer.setSize(window.innerWidth, window.innerHeight);
 		}
 
-		function onDocumentTouchStart( event ) {
+		function onDocumentTouchStart(event) {
 			event.preventDefault();
 			mouse.x = (event.pageX / window.innerWidth) * 2 - 1;
 			mouse.y = -(event.pageY / window.innerHeight) * 2 + 1;
@@ -330,48 +332,49 @@
 			//		console.log(intersects.length);
 			//	}
 
-				if (intersects.length > 0) {
+			if (intersects.length > 0) {
 
 
-    color = '0x' + '009dff'+(Math.random()*(1<<24)|0).toString(16).slice(-6);
-    for (var i = 0; i < objects.length; i++) {
-        object = objects[i];
-        object.material.color.setHex(color);
-    }
-    console.log(intersects.length);
+				color = '0x' + '009dff' + (Math.random() * (1 << 24) | 0).toString(16).slice(-6);
+				for (var i = 0; i < objects.length; i++) {
+					object = objects[i];
+					object.material.color.setHex(color);
+				}
+				console.log(intersects.length);
 
 			} else {
 				if (INTERSECTED) INTERSECTED.material.color.setHex(INTERSECTED.currentHex);
 				INTERSECTED = null;
 			}
 
-  		isUserInteracting = true
+			isUserInteracting = true
 
-  		onPointerDownPointerX = event.pageX;
-  		onPointerDownPointerY = event.pageY;
+			onPointerDownPointerX = event.pageX;
+			onPointerDownPointerY = event.pageY;
 
-  		onPointerDownLon = lon;
-  		onPointerDownLat = lat;
+			onPointerDownLon = lon;
+			onPointerDownLat = lat;
 		}
 
 
-function onDocumentTouchMove( event ) {
-    console.log("TouchMove")
+		function onDocumentTouchMove(event) {
+			console.log("TouchMove")
 
-    if ( event.touches.length == 1 ) {
-      event.preventDefault();
-      lon = ( onPointerDownPointerX - event.touches[0].pageX ) * 0.1 + onPointerDownLon;
-      lat = ( event.touches[0].pageY - onPointerDownPointerY ) * 0.1 + onPointerDownLat;
-    }
-}
+			if (event.touches.length == 1) {
+				event.preventDefault();
+				lon = (onPointerDownPointerX - event.touches[0].pageX) * 0.1 + onPointerDownLon;
+				lat = (event.touches[0].pageY - onPointerDownPointerY) * 0.1 + onPointerDownLat;
+			}
+		}
 
-function onDocumentMouseMove( event ) {
+		function onDocumentMouseMove(event) {
 
-    if ( isUserInteracting === true ) {
-      lon = ( onPointerDownPointerX - event.pageX ) * 0.1 + onPointerDownLon;
-      lat = ( event.pageY - onPointerDownPointerY ) * 0.1 + onPointerDownLat;
-    }
-}
+			if (isUserInteracting === true) {
+				lon = (onPointerDownPointerX - event.pageX) * 0.1 + onPointerDownLon;
+				lat = (event.pageY - onPointerDownPointerY) * 0.1 + onPointerDownLat;
+			}
+		}
+
 		function onDocumentMouseDown(event) {
 			event.preventDefault();
 			mouse.x = (event.pageX / window.innerWidth) * 2 - 1;
@@ -389,26 +392,26 @@ function onDocumentMouseMove( event ) {
 			//		console.log(intersects.length);
 			//	}
 
-				if (intersects.length > 0) {
-    color = '0x' + '009dff'+(Math.random()*(1<<24)|0).toString(16).slice(-6);
-    for (var i = 0; i < objects.length; i++) {
-        object = objects[i];
-        object.material.color.setHex(color);
-    }
-    console.log(intersects.length);
+			if (intersects.length > 0) {
+				color = '0x' + '009dff' + (Math.random() * (1 << 24) | 0).toString(16).slice(-6);
+				for (var i = 0; i < objects.length; i++) {
+					object = objects[i];
+					object.material.color.setHex(color);
+				}
+				console.log(intersects.length);
 
 			} else {
 				if (INTERSECTED) INTERSECTED.material.color.setHex(INTERSECTED.currentHex);
 				INTERSECTED = null;
 			}
 
-  		isUserInteracting = true
+			isUserInteracting = true
 
-  		onPointerDownPointerX = event.pageX;
-  		onPointerDownPointerY = event.pageY;
+			onPointerDownPointerX = event.pageX;
+			onPointerDownPointerY = event.pageY;
 
-  		onPointerDownLon = lon;
-  		onPointerDownLat = lat;
+			onPointerDownLon = lon;
+			onPointerDownLat = lat;
 		}
 
 		function animate() {
@@ -426,16 +429,16 @@ function onDocumentMouseMove( event ) {
 		}
 
 		function render() {
-							var timer = Date.now() * 0.0005;
-							//boxesGroup.rotation.y += -0.001;
+			var timer = Date.now() * 0.0005;
+			//boxesGroup.rotation.y += -0.001;
 
-							for (var i = 0; i < objects.length; i++) {
-					        object = objects[i];
-					        object.rotation.y += -0.005;
-								}
+			for (var i = 0; i < objects.length; i++) {
+				object = objects[i];
+				object.rotation.y += -0.005;
+			}
 
-								wevhead.lookAt(camera.position);
-								stream.lookAt(camera.position);
+			//wevhead.lookAt(camera.position);
+			//stream.lookAt(camera.position);
 
 
 
