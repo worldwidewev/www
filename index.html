@@ -47,7 +47,7 @@
 		var objects = [];
 		var mouse = new THREE.Vector2(),
 			INTERSECTED;
-
+		var wevhead;
 		var boxesGroup = new THREE.Group();
 		var tween;
 
@@ -86,7 +86,7 @@
 							wevhead = new THREE.Mesh(geometry, material);
 							scene.add(wevhead);
 
-							//DDDINK.addURL(wevhead, "https://distrokid.com/hyperfollow/wev/gbMx");
+							DDDINK.addURL(wevhead, "https://distrokid.com/hyperfollow/wev/gbMx");
 							DDDINK.domEvent.setGlobalLinkConfig('_self', 'ON', 'ON', 0xffffff);
 							DDDINK.readRendererObj(renderer, scene, camera);
 							DDDINK.domEvent.addFnc('Fn', 'A');
@@ -259,6 +259,13 @@
 
 			if (window.mobilecheck() == true) {
 				controls = new THREE.DeviceOrientationControls(camera, THREE.WebGLRenderer);
+
+							raycaster.setFromCamera(mouse, camera);
+							var headintersect = raycaster.intersectObject(INTERSECTED);
+							var link1 = 'https://distrokid.com/hyperfollow/wev/gbMx'
+							if (headintersect.length > 0) {
+								window.open(link1);
+								}
 			} else {
 				controls = new THREE.OrbitControls(camera, renderer.domElement);
 				controls.minPolarAngle = Math.PI / 2 - 0.2;
@@ -353,13 +360,6 @@
 				INTERSECTED = null;
 			}
 
-			var headintersect = raycaster.intersectObject(wevhead);
-			var link1 = 'https://distrokid.com/hyperfollow/wev/gbMx'
-			if (headintersect.length > 0) {
-				window.open(link1);
-				}
-
-				event.stopPropagation();
 
 			isUserInteracting = true
 
