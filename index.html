@@ -243,8 +243,8 @@
 
 
 
-            stats = new Stats();
-            container.appendChild(stats.dom);
+            //stats = new Stats();
+            //container.appendChild(stats.dom);
 
             window.mobilecheck = function() {
                 var check = false;
@@ -273,8 +273,8 @@
                     controls.enabled = true;
                 });
 
-                //controls.enablePan = false;
-                //controls.enableZoom = false;
+                controls.enablePan = false;
+                controls.enableZoom = false;
             };
 
             loader.load('models/lookup.json', handle_load2);
@@ -307,6 +307,22 @@
                 stream.scale.set(10, 10, 10);
             }
             stream = new THREE.Mesh(geometry, material);
+
+            loader.load('models/infinityplane.json', handle_load4);
+
+            function handle_load4(geometry, materials) {
+                var material = new THREE.MultiMaterial(materials);
+                material.morphTargets = true;
+
+                infinity = new THREE.Mesh(geometry, material);
+                scene.add(infinity);
+
+
+                infinity.position.y = 90;
+                infinity.position.z = -8;
+                infinity.scale.set(10, 10, 10);
+            }
+            infinity = new THREE.Mesh(geometry, material);
 
             document.addEventListener('mousedown', onDocumentMouseDown, {
                 passive: false
@@ -444,7 +460,7 @@
             requestAnimationFrame(animate);
             controls.update();
             render();
-            stats.update();
+            //stats.update();
         }
 
         var prevTime = Date.now();
