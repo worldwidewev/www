@@ -13,7 +13,7 @@
             overflow: hidden;
             /* touch-action: none; */
         }
-        
+
         #info {
             position: absolute;
             top: 0px;
@@ -402,7 +402,9 @@
             var link1 = 'https://distrokid.com/hyperfollow/wev/gbMx'
             console.log("HEADLENGTH: " + headintersect.length);
             if (headintersect.length > 0) {
-                window.open(link1);
+                //window.open(link1);
+                var windowLink = window.open();
+                windowLink.location = link1;
             }
 
             var intersects = raycaster.intersectObjects(objects);
