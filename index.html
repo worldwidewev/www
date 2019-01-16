@@ -67,7 +67,7 @@
             //camera.position.set(0, 250, 1000);
             camera.position.y = 5;
             camera.position.z = 500;
-            camera.lookAt(scene.position);
+
 
             scene.add(camera);
             scene.add(new THREE.AmbientLight(0xf0f0f0));
@@ -262,6 +262,7 @@
             if (window.mobilecheck() == true) {
                 console.log("Mobile device found");
                 controls = new THREE.DeviceOrientationControls(camera, THREE.WebGLRenderer);
+
             } else {
                 controls = new THREE.OrbitControls(camera, renderer.domElement);
                 controls.minPolarAngle = Math.PI / 2 - 0.2;
@@ -292,6 +293,10 @@
                 lookup.position.z = 300;
                 lookup.scale.set(12, 12, 12);
             }
+
+            lookup = new THREE.Mesh(geometry, material);
+
+                        camera.lookAt(lookup.position);
 
             loader.load('models/stream.json', handle_load3);
 
@@ -324,6 +329,24 @@
                 infinity.scale.set(8, 8, 8);
             }
             infinity = new THREE.Mesh(geometry, material);
+
+            loader.load('models/WEV.json', handle_load11);
+
+  					function handle_load11(geometry, materials) {
+  						var material = new THREE.MultiMaterial(materials);
+  						material.morphTargets = true;
+
+  						wev = new THREE.Mesh(geometry, material);
+  						scene.add(wev);
+
+
+  						wev.position.y = 2500;
+  						wev.position.z = -8;
+              wev.scale.set(20,20,20);
+
+
+  					}
+  					wev = new THREE.Mesh(geometry, material)
 
             document.addEventListener('mousedown', onDocumentMouseDown, {
                 passive: false
