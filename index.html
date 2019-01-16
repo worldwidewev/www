@@ -403,8 +403,7 @@
             console.log("HEADLENGTH: " + headintersect.length);
             if (headintersect.length > 0) {
                 //window.open(link1);
-                var windowLink = window.open();
-                windowLink.location = link1;
+                window.location.assign(link1)
             }
 
             var intersects = raycaster.intersectObjects(objects);
