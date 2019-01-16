@@ -98,7 +98,13 @@ THREE.DeviceOrientationControls = function ( object ) {
 
 			var orient = scope.screenOrientation ? THREE.Math.degToRad( scope.screenOrientation ) : 0; // O
 
-			setObjectQuaternion( scope.object.quaternion, alpha - scope.offset, beta, gamma, orient );
+      if( /Android/i.test(navigator.userAgent) ) {
+        setObjectQuaternion( scope.object.quaternion, alpha - scope.offset, beta, gamma, orient );
+
+      } else {
+
+
+			setObjectQuaternion( scope.object.quaternion, alpha, beta, gamma, orient );
 
 		}
 
