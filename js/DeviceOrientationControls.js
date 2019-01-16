@@ -86,7 +86,7 @@ THREE.DeviceOrientationControls = function(object) {
           return true;
         } else {
           return false;
-        };
+        }
       };
 
   this.update = function() {
@@ -106,11 +106,12 @@ THREE.DeviceOrientationControls = function(object) {
       var orient = scope.screenOrientation ? THREE.Math.degToRad(scope.screenOrientation) : 0; // O
 
 
-      if (window.mobilecheck() == true) {
+      if (this.mobilecheck() == true) {
               setObjectQuaternion(scope.object.quaternion, alpha - scope.offset, beta, gamma, orient);
             } else {
               setObjectQuaternion(scope.object.quaternion, alpha, beta, gamma, orient);
             }
+          }
 
   };
 
