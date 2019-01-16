@@ -98,8 +98,6 @@ THREE.DeviceOrientationControls = function(object) {
       var orient = scope.screenOrientation ? THREE.Math.degToRad(scope.screenOrientation) : 0; // O
 
       window.mobilecheck = function() {
-
-        function detectmob() {
             if (navigator.userAgent.match(/Android/i)) {return true;} else {return false;};
           }
 
