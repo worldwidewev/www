@@ -61,6 +61,11 @@ THREE.DeviceOrientationControls = function ( object ) {
 
 		onScreenOrientationChangeEvent(); // run once on load
 
+    if (scope.screenOrientation == 0)
+{
+    scope.offset = 1.5708;
+}
+
 		window.addEventListener( 'orientationchange', onScreenOrientationChangeEvent, false );
 		window.addEventListener( 'deviceorientation', onDeviceOrientationChangeEvent, false );
 
@@ -93,7 +98,7 @@ THREE.DeviceOrientationControls = function ( object ) {
 
 			var orient = scope.screenOrientation ? THREE.Math.degToRad( scope.screenOrientation ) : 0; // O
 
-			setObjectQuaternion( scope.object.quaternion, alpha, beta, gamma, orient );
+			setObjectQuaternion( scope.object.quaternion, alpha - scope.offset, beta, gamma, orient );
 
 		}
 
