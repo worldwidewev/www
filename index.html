@@ -38,7 +38,7 @@
     <script src="js/Projector.js"></script>
     <script src="js/3Dink.js"></script>
     <script src="js/stats.min.js"></script>
-    <script src="js/Tween.js"></script>
+
 
     <script>
         var container, stats, clock, mixer;
@@ -63,7 +63,7 @@
             var group = new THREE.Group();
             scene.add(group);
 
-            camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 300, 8000);
+            camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 300, 15000);
             //camera.position.set(0, 250, 1000);
             camera.position.y = 5;
             camera.position.z = 500;
