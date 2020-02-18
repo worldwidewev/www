@@ -57,20 +57,40 @@ THREE.DeviceOrientationControls = function(object) {
 
   }();
 
-  this.connect = function() {
 
-    onScreenOrientationChangeEvent(); // run once on load
+  this.connect = function () {
 
-    if (scope.screenOrientation == 0) {
-      scope.offset = 1.5708;
-    }
+  onScreenOrientationChangeEvent(); // run once on load
 
-    window.addEventListener('orientationchange', onScreenOrientationChangeEvent, false);
-    window.addEventListener('deviceorientation', onDeviceOrientationChangeEvent, false);
+  // iOS 13+
 
-    scope.enabled = true;
+  if ( window.DeviceOrientationEvent !== undefined && typeof window.DeviceOrientationEvent.requestPermission === 'function' ) {
 
-  };
+    window.DeviceOrientationEvent.requestPermission().then( function ( response ) {
+
+      if ( response == 'granted' ) {
+
+        window.addEventListener( 'orientationchange', onScreenOrientationChangeEvent, false );
+        window.addEventListener( 'deviceorientation', onDeviceOrientationChangeEvent, false );
+
+      }
+
+    } ).catch( function ( error ) {
+
+      console.error( 'THREE.DeviceOrientationControls: Unable to use DeviceOrientation API:', error );
+
+    } );
+
+  } else {
+
+    window.addEventListener( 'orientationchange', onScreenOrientationChangeEvent, false );
+    window.addEventListener( 'deviceorientation', onDeviceOrientationChangeEvent, false );
+
+  }
+
+  scope.enabled = true;
+
+};
 
   this.disconnect = function() {
 
